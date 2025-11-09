@@ -1,66 +1,40 @@
-using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-[RequireComponent(typeof(PlayerMovement))]
-
 public class PlayerMovement : MonoBehaviour
 {
+    // Camera Rotation
+    
+    private Transform cameraTransform;
+
     // Ground Movement
-    private PlayerMovement movement;
     private Rigidbody rb;
-    private Vector3 playerVelocity;
-    private float gravityValue = -9.81f;
+    public float MoveSpeed = 5f;
     private float moveHorizontal;
-    [SerializeField] private float playerSpeed = 2.0f;
     private float moveForward;
-    private bool groundedPlayer;
+
     bool canpickup;
     GameObject ObjectIwantToPickUp;
     bool hasItem;
-    
+
+    // Jumping
+    public float jumpForce = 10f;
+    public float fallMultiplier = 2.5f; // Multiplies gravity when falling down
+    public float ascendMultiplier = 2f; // Multiplies gravity for ascending to peak of jump
+    private bool isGrounded = true;
     public LayerMask groundLayer;
-    private bool isGrounded;
 
     void Start()
     {
-        movement = gameObject.GetComponent<PlayerMovement>();
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
         canpickup = false;
         hasItem = false;
-       
+        cameraTransform = Camera.main.transform;
     }
 
     void Update()
     {
-        groundedPlayer = movement.isGrounded;
-        if (groundedPlayer && playerVelocity.y < 0)
-        {
-            playerVelocity.y = 0f;
-        }
-
-        var horizontalAxis = Input.GetAxis("Horizontal");
-        var verticalAxis = Input.GetAxis("Vertical");
-
-        var forward = Camera.main.transform.forward;
-        var right = Camera.main.transform.right;
-
-        forward.y = 0f;
-        right.y = 0f;
-        forward.Normalize();
-        right.Normalize();
-
-        Vector3 move = forward * verticalAxis + right * horizontalAxis;
-        movement.Move(move * Time.deltaTime * playerSpeed);
-
-        if (move != Vector3.zero)
-        {
-            gameObject.transform.position = move;
-        }
-
-
-    
         if (canpickup == true)
         {
             if (Input.GetKeyDown(KeyCode.Space))
@@ -70,11 +44,6 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-    }
-
-    private void Move(Vector3 vector3)
-    {
-        throw new NotImplementedException();
     }
 
     public void SetHorizontalMovement(float horizontal)
@@ -101,6 +70,27 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
-  
-    
+    void FixedUpdate()
+    {
+        MovePlayer();
+    }
+
+    void MovePlayer()
+    {
+
+        Vector3 movement = (transform.right * moveHorizontal + transform.forward * moveForward).normalized;
+        Vector3 targetVelocity = movement * MoveSpeed;
+
+        // Apply movement to the Rigidbody
+        Vector3 velocity = rb.linearVelocity;
+        velocity.x = targetVelocity.x;
+        velocity.z = targetVelocity.z;
+        rb.linearVelocity = velocity;
+
+        // If we aren't moving and are on the ground, stop velocity so we don't slide
+        if (isGrounded && moveHorizontal == 0 && moveForward == 0)
+        {
+            rb.linearVelocity = new Vector3(0, rb.linearVelocity.y, 0);
+        }
+    }
 }
