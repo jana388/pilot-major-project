@@ -37,7 +37,8 @@ public class CameraTrigger : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            if (CameraSwitcher.ActiveCamera != cam) CameraSwitcher.SwitchCamera(cam);
+            //if (CameraSwitcher.ActiveCamera != cam) CameraSwitcher.SwitchCamera(cam);
+            cam.Priority = 12;
         }
     }
 }

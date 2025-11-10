@@ -20,7 +20,11 @@ public class PlayerInput : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        switch (current)
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Debug.Log("Hello");
+        }
+            switch (current)
         {
             case PlayState.Explore:
                 float horizontal = Input.GetAxis("Horizontal");
@@ -39,6 +43,7 @@ public class PlayerInput : MonoBehaviour
             case PlayState.Puzzle:
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
+                    Debug.Log("Hello");
                     if (puzzle.SolvePuzzle())
                     {
                         current = PlayState.Explore;
