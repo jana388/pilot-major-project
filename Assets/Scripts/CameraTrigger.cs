@@ -28,7 +28,7 @@ public class CameraTrigger : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.green;
-        Gizmos.DrawWireCube(transform.position, box.size);
+        Gizmos.DrawWireCube(transform.position, boxSize);
     }
 
 
