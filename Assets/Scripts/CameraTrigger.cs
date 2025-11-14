@@ -9,6 +9,7 @@ using UnityEngine.Rendering;
 
 public class CameraTrigger : MonoBehaviour
 {
+    public static int cameraPriority = 12;
    [SerializeField] public CinemachineCamera cam;
    [SerializeField] private Vector3 boxSize;
 
@@ -38,7 +39,8 @@ public class CameraTrigger : MonoBehaviour
         if (other.gameObject.CompareTag("Player"))
         {
             //if (CameraSwitcher.ActiveCamera != cam) CameraSwitcher.SwitchCamera(cam);
-            cam.Priority = 12;
+            CameraTrigger.cameraPriority += 1;
+            cam.Priority = CameraTrigger.cameraPriority;
         }
     }
 }
