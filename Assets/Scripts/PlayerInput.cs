@@ -31,14 +31,14 @@ public class PlayerInput : MonoBehaviour
                 float vertical = Input.GetAxis("Vertical");
                 movement.SetHorizontalMovement(horizontal);
                 movement.SetVerticalMovement(vertical);
-                if (Input.GetKeyDown(KeyCode.Space))
-                {
-                    if (pickup.PickUpObject())
-                    {
-                        current = PlayState.Puzzle;
-                        puzzle.Begin();
-                    }
-                }
+                //if (Input.GetKeyDown(KeyCode.Space))
+                //{
+                //    if (pickup.PickUpObject())
+                //    {
+                //        current = PlayState.Puzzle;
+                //        puzzle.Begin();
+                //    }
+                //}
                 break;
             case PlayState.Puzzle:
                 if (Input.GetKeyDown(KeyCode.Space))

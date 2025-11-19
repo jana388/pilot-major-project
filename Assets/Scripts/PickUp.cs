@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Playables;
 
 public class PickUp : MonoBehaviour
 {
@@ -6,11 +8,25 @@ public class PickUp : MonoBehaviour
     bool canpickup; 
     GameObject ObjectIwantToPickUp; 
     bool hasItem;
+    List<GameObject> items = new List<GameObject> ();
    
     void Start()
     {
         canpickup = false;    
         hasItem = false;
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            if (canpickup && ObjectIwantToPickUp != null)
+            {
+                items.Add(ObjectIwantToPickUp);
+                ObjectIwantToPickUp.SetActive (false);
+                ObjectIwantToPickUp = null;
+            }
+        }
     }
 
     // Update is called once per frame
@@ -27,19 +43,33 @@ public class PickUp : MonoBehaviour
         }
         return false;
     }
-    //private void OnCollisionEnter(Collision other) 
-    //{
-    //    if (other.gameObject.tag == "object") 
-    //    {
-    //        canpickup = true;  //set the pick up bool to true
-    //        ObjectIwantToPickUp = other.gameObject; //set the gameobject you collided with to one you can reference
-    //    }
-    //}
-    //private void OnCollisionExit(Collision other)
-    //{
-    //    canpickup = false; 
 
-    //}
+    public bool HaveYouGotTheItem(string itemName)
+    {
+
+        foreach (GameObject item in items)
+        {
+            if (item.tag == itemName)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public bool DeleteItem(string itemName)
+    {
+
+        foreach (GameObject item in items)
+        {
+            if (item.tag == itemName)
+            {
+                items.Remove(item);
+                return true;
+            }
+        }
+        return false;
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -47,6 +77,12 @@ public class PickUp : MonoBehaviour
         {
             canpickup = true;  //set the pick up bool to true
             ObjectIwantToPickUp = other.gameObject; //set the gameobject you collided with to one you can reference
+        }
+        if (other.gameObject.tag == "Key")
+        {
+            canpickup = true;
+            ObjectIwantToPickUp = other.gameObject;
+
         }
     }
 
@@ -56,6 +92,13 @@ public class PickUp : MonoBehaviour
         {
             canpickup = false;  //set the pick up bool to true
             ObjectIwantToPickUp = null; //set the gameobject you collided with to one you can reference
+        }
+        if (other.gameObject.tag == "Key")
+        {
+
+            canpickup = false;  //set the pick up bool to true
+            ObjectIwantToPickUp = null;
+
         }
     }
 }
