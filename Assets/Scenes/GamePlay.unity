@@ -134,7 +134,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &42271521
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5829,7 +5829,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cam: {fileID: 1806328114}
-  boxSize: {x: 12.57, y: 1.44, z: -6.12}
+  boxSize: {x: 8.12, y: 1.44, z: -6.81}
 --- !u!1 &1127283199
 GameObject:
   m_ObjectHideFlags: 0
