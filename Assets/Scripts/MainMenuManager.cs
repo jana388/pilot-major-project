@@ -6,9 +6,12 @@ public class MainMenuManager : MonoBehaviour
     public static MainMenuManager _;
     [SerializeField] private bool _debugMode;
 
-    public enum MainMenuButtons { play, settings, credits, exit };
-    public enum CreditsButtons{ back };
-    public enum SettingsButtons{ back };
+    public enum MainMenuButtons { play, settings, credits, exit }; 
+    public enum SocialButtons { website, twitter };
+    public enum CreditsButtons { back };
+    public enum SettingsButtons { back };
+   
+
     [SerializeField] GameObject _MainMenuContainer;
     [SerializeField] GameObject _CreditsMenuContainer;
     [SerializeField] GameObject _SettingsMenuContainer;
@@ -36,38 +39,58 @@ public class MainMenuManager : MonoBehaviour
         DebugMessage("Button Clicked: " + buttonClicked.ToString());
         switch (buttonClicked)
         {
-        case MainMenuButtons.play:
+            case MainMenuButtons.play:
                 PlayClicked();
                 break;
-        case MainMenuButtons.settings:
-                OpenSettingsMenu();
+            case MainMenuButtons.settings:
+                SettingsClicked();
                 break;
-        case MainMenuButtons.credits:
-                OpenCreditsMenu();
+            case MainMenuButtons.credits:
+                CreditsClicked();
                 break;
-        case MainMenuButtons.exit:
+            case MainMenuButtons.exit:
                 QuitGame();
                 break;
-        default:
+            default:
                 Debug.Log("Button click that wasn't implemented in MainMenuManager Method");
                 break;
 
         }
     }
+    public void SocialButtonClicked(SocialButtons buttonClicked)
+    {
+        string websiteLink = "";
+        switch (buttonClicked)
+        {
+            case SocialButtons.website:
+                websiteLink = "https://janaradulaski.wixsite.com/myportfolio";
+                break;
+            case SocialButtons.twitter:
+                websiteLink = "https://x.com/RadulaskiJana";
+                break;
+            default:
+                Debug.LogError("not yet implemented");
+                break;
+        }
+        if (websiteLink != "")
+        {
+            Application.OpenURL(websiteLink);
+        }
+    }
 
-    public void OpenCreditsMenu()
+    public void CreditsClicked()
     {
         OpenMenu(_CreditsMenuContainer);
     }
 
-    public void OpenSettingsMenu()
+    public void SettingsClicked()
     {
         OpenMenu(_SettingsMenuContainer);
     }
 
     public void ReturnToMainMenu()
     {
-
+        OpenMenu(_MainMenuContainer);
     }
 
     public void CreditsButtonClicked(CreditsButtons buttonClicked)
