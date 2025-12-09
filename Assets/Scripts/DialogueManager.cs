@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering;
 using UnityEngine.UI;
 
 public class DialogueManager : MonoBehaviour
@@ -22,6 +23,8 @@ public class DialogueManager : MonoBehaviour
     public float typingSpeed = 0.2f;
 
     public Animator animator;
+
+    private Coroutine dialogueRoutine;
     
     private void Start()
     {
@@ -51,6 +54,18 @@ public class DialogueManager : MonoBehaviour
         DisplayNextDialogueLine();
     }
 
+    public void CloseDialogue()
+    {
+        if (dialogueRoutine != null) StopCoroutine(dialogueRoutine);
+
+        isDialogueActive = false;
+        dialogueBox.SetActive(false);
+        if (animator)
+        {
+            animator.Play("hide");
+        }
+    }
+
     public void DisplayNextDialogueLine()
     {
         DialogueLine currentLine = lines.Dequeue();
@@ -60,7 +75,7 @@ public class DialogueManager : MonoBehaviour
 
         StopAllCoroutines();
 
-        StartCoroutine(TypeSentence(currentLine));
+        dialogueRoutine = StartCoroutine(TypeSentence(currentLine));
     }
 
     IEnumerator TypeSentence(DialogueLine dialogueLine)
@@ -79,12 +94,7 @@ public class DialogueManager : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                isDialogueActive = false;
-                dialogueBox.SetActive(false);
-                if (animator)
-                {
-                    animator.Play("hide");
-                }
+                CloseDialogue();
             }
         }
     }

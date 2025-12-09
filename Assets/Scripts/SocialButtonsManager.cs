@@ -1,8 +1,8 @@
 using UnityEngine;
 
-public class SocialButtonsManager : MonoBehaviour
+public class SocialButtonTypesManager : MonoBehaviour
 {
-    [SerializeField] private MainMenuManager.SocialButtons _buttonType;
+    [SerializeField] private MainMenuManager.SocialButtonTypes _buttonType;
 
     public void ButtonClicked()
     {

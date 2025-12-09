@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PlayerInput : MonoBehaviour
+public class PlayerInput : MonoTimeBehaviour
 {
     public PlayerMovement movement;
     public PickUp pickup;

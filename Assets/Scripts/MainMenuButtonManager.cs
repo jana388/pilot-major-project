@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class MainMenuButtonManager : MonoBehaviour
 {
-    [SerializeField] private MainMenuManager.MainMenuButtons _buttonType;
+    [SerializeField] private MainMenuManager.MainMenuButtonTypes _buttonType;
 
     public void ButtonClicked()
     {
