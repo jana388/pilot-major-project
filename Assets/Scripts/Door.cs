@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Door : MonoBehaviour
+public class Door : InteractableObject
 {
     bool touching = false;
     PickUp player;
@@ -37,6 +37,14 @@ public class Door : MonoBehaviour
         if (other.tag == "Player")
         {
             touching = false;
+        }
+    }
+
+    public override void Interacted()
+    {
+        if (touching)
+        {
+
         }
     }
 }

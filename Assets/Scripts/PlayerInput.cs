@@ -24,7 +24,7 @@ public class PlayerInput : MonoTimeBehaviour
         {
             Debug.Log("Hello");
         }
-            switch (current)
+        switch (current)
         {
             case PlayState.Explore:
                 float horizontal = Input.GetAxis("Horizontal");
