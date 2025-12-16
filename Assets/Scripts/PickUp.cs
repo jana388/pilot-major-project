@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.Playables;
 
 public class PickUp : MonoBehaviour
@@ -8,7 +10,7 @@ public class PickUp : MonoBehaviour
     bool canpickup; 
     GameObject ObjectIwantToPickUp; 
     bool hasItem;
-    List<GameObject> items = new List<GameObject> ();
+    List<GameObject> items = new();
    
     void Start()
     {
@@ -16,9 +18,24 @@ public class PickUp : MonoBehaviour
         hasItem = false;
     }
 
+    [SerializeReference] InputActionReference interactAction;
+
+
+    private void OnEnable()
+    {
+        interactAction.action.Enable();
+        //jumpAction.action.Enable();
+    }
+
+    private void OnDisable()
+    {
+        interactAction.action.Disable();
+        //jumpAction.action.Disable();
+    }
+
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (interactAction.action.WasCompletedThisFrame())
         {
             if (canpickup && ObjectIwantToPickUp != null)
             {
