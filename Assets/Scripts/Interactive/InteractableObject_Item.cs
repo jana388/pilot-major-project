@@ -12,4 +12,6 @@ public class InteractableObject_Item : InteractableObject
 
         gameObject.SetActive(false);
     }
+
+
 }

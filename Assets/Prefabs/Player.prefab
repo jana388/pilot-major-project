@@ -170,8 +170,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7510378730843985898}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.27303892, y: 0.4028205, z: -0.11913115, w: 0.86544394}
-  m_LocalPosition: {x: 27.55683, y: 6.20246, z: 12.806273}
+  m_LocalRotation: {x: 0.12454765, y: 0.65520513, z: -0.101192266, w: 0.7382102}
+  m_LocalPosition: {x: -4.6589413, y: 3.6150904, z: -2.6372638}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -364,6 +364,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveAction: {fileID: -5406231822352311631, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   interactAction: {fileID: 7534247612124090447, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  nextDialogueAction: {fileID: -8419170976096379419, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   playerSpeed: 5
   jumpHeight: 1.5
   gravityValue: -9.81

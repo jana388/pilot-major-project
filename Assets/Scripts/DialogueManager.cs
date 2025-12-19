@@ -1,9 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor.ShaderGraph;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.Rendering;
 using UnityEngine.UI;
 
 public class DialogueManager : MonoBehaviour
@@ -25,7 +24,7 @@ public class DialogueManager : MonoBehaviour
     public Animator animator;
 
     private Coroutine dialogueRoutine;
-    
+
     private void Start()
     {
         if (Instance == null)
@@ -40,6 +39,11 @@ public class DialogueManager : MonoBehaviour
     {
         isDialogueActive = true;
         dialogueBox.SetActive(true);
+
+        PlayerController.ToggleMovementInput(false); // Disable the players movement input
+        PlayerController.ToggleDialogueInput(true); // Enable the players dialogue input
+       
+
         if (animator)
         {
             animator.Play("show");
@@ -57,6 +61,10 @@ public class DialogueManager : MonoBehaviour
     public void CloseDialogue()
     {
         if (dialogueRoutine != null) StopCoroutine(dialogueRoutine);
+
+        PlayerController.ToggleMovementInput(true); // Enable the players movement input
+        PlayerController.ToggleDialogueInput(false); // Disable the players dialogue input
+
 
         isDialogueActive = false;
         dialogueBox.SetActive(false);
@@ -84,7 +92,7 @@ public class DialogueManager : MonoBehaviour
         foreach (char letter in dialogueLine.line.ToCharArray())
         {
             dialogueArea.text += letter;
-            yield return new WaitForSeconds (typingSpeed);
+            yield return new WaitForSeconds(typingSpeed);
         }
     }
 
@@ -92,10 +100,9 @@ public class DialogueManager : MonoBehaviour
     {
         if (isDialogueActive && lines.Count == 0)
         {
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                CloseDialogue();
-            }
+
+            CloseDialogue();
+
         }
     }
 }

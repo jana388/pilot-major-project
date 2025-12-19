@@ -33,7 +33,7 @@ public class DialogueTrigger : MonoBehaviour
     public void TriggerDialogue()
     {
         DialogueManager.Instance.StartDialogue(dialogue);
-        // I want to Disable Puzzle & PlayerMovement so that the player can interact with spacebar withou doing anything in the game
+        // I want to Disable Puzzle & PlayerMovement so that the player can interact with spacebar without doing anything in the game
     }
 
     private void Awake()

@@ -19,4 +19,5 @@ public class Puzzle : MonoBehaviour
     {
         gameObject.SetActive(false);
     }
+
 }

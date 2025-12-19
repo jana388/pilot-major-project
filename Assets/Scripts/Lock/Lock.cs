@@ -43,8 +43,8 @@ public class Lock : MonoBehaviour
 
     private void Update()
     {
-        //angle = Time.deltaTime * rotationSpeed;
-        //parent.Rotate(angle, 0, 0);
-        if(
+        angle = Time.deltaTime * rotationSpeed;
+        parent.Rotate(angle, 0, 0);
+        
     }
 }   

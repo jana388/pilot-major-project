@@ -6,23 +6,43 @@ public class PlayerController : MonoTimeBehaviour
 {
     #region Input
 
+    [Header("Movement Inputs")]
     [SerializeField] InputActionReference moveAction;
     [SerializeField] InputActionReference interactAction;
+
+    [Header("Dialogue Inputs")]
+    [SerializeField] InputActionReference nextDialogueAction;
+
     private PlayerInput playerInput;
 
+    public static PlayerController Instance;
 
-    void ToggleInput(bool state)
+    public static void ToggleMovementInput(bool state)
+        // :3
     {
         if (state)
         {
-            moveAction.action.Enable();
-            interactAction.action.Enable();
+            Instance.moveAction.action.Enable();
+            Instance.interactAction.action.Enable();
         }
         else
         {
-            moveAction.action.Disable();
-            interactAction.action.Disable();
+            Instance.moveAction.action.Disable();
+            Instance.interactAction.action.Disable();
         }
+    }
+
+    public static void ToggleDialogueInput(bool state)
+    {
+        if (state)
+        {
+            Instance.nextDialogueAction.action.Enable();
+        }
+        else
+        {
+            Instance.nextDialogueAction.action.Disable();
+        }
+
     }
     #endregion
 
@@ -30,7 +50,6 @@ public class PlayerController : MonoTimeBehaviour
 
     [Header("Stats")]
     [SerializeField] float playerSpeed = 5.0f;
-    [SerializeField] float jumpHeight = 1.5f;
     [SerializeField] float gravityValue = -9.81f;
 
     private Vector3 playerVelocity;
@@ -55,24 +74,16 @@ public class PlayerController : MonoTimeBehaviour
     private void Awake()
     {
         playerInput = GetComponent<PlayerInput>();
+
+        Instance = this;
+
+        ToggleMovementInput(true); // Start in movement state
     }
 
     public override void TimeUpdate()
     {
         Movement();
         Interact();
-    }
-
-    private void OnEnable()
-    {
-
-        playerInput.all[0].SwitchCurrentActionMap("SwitchMap");
-        playerInput.actions["SwitchMap"].performed += SwitchActionMap;
-    }
-
-    private void SwitchActionMap(InputAction.CallbackContext context)
-    {
-        playerInput.SwitchCurrentActionMap("Puzzle");
     }
 
     void Movement()
@@ -117,7 +128,7 @@ public class PlayerController : MonoTimeBehaviour
 
     void Interact()
     {
-        if (interactAction.action.WasCompletedThisFrame())
+        if (_canInteract && interactAction.action.WasCompletedThisFrame())
         {
             InteractableObject detectedObject = DetectInteractables(transform.position, _detectRadius, _interactableMask);
 
@@ -162,7 +173,7 @@ public class PlayerController : MonoTimeBehaviour
 
             if (closestItem != null)
             {
-                Debug.Log($"Hit {closestItem.name} at {checkPosition}");
+                //Debug.Log($"Hit {closestItem.name} at {checkPosition}");
                 return closestItem.GetComponent<InteractableObject>();
             }
                     
@@ -170,7 +181,7 @@ public class PlayerController : MonoTimeBehaviour
         }
         else
         {
-            Debug.Log($"No hit at: {checkPosition}");
+            //Debug.Log($"No hit at: {checkPosition}");
             return null;
         }
     }
