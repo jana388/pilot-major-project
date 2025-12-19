@@ -6,44 +6,56 @@ public class PlayerController : MonoTimeBehaviour
 {
     #region Input
 
+    [SerializeField] InputActionAsset input;
     [Header("Movement Inputs")]
     [SerializeField] InputActionReference moveAction;
     [SerializeField] InputActionReference interactAction;
-
     [Header("Dialogue Inputs")]
     [SerializeField] InputActionReference nextDialogueAction;
 
-    private PlayerInput playerInput;
+    //private PlayerInput playerInput;
+    private InputActionMap player;
+    private InputActionMap ui;
+    private InputActionMap dialogue;
+    private InputActionMap puzzle;
 
     public static PlayerController Instance;
 
-    public static void ToggleMovementInput(bool state)
+    public enum InputState
+    {
+        Player,
+        UI,
+        Dialogue,
+        Puzzle
+    }
+
+    public InputState inputState;
+
+    public static void ActivateInputState(InputState state)
         // :3
     {
-        if (state)
+        Instance.inputState = state;
+        Instance.player.Disable();
+        Instance.ui.Disable();
+        Instance.puzzle.Disable();
+        Instance.dialogue.Disable();
+        switch (state)
         {
-            Instance.moveAction.action.Enable();
-            Instance.interactAction.action.Enable();
-        }
-        else
-        {
-            Instance.moveAction.action.Disable();
-            Instance.interactAction.action.Disable();
+            case InputState.Player:
+                Instance.player.Enable();
+                break;
+            case InputState.UI:
+                Instance.ui.Enable();
+                break;
+            case InputState.Dialogue:
+                Instance.dialogue.Enable();
+                break;
+            case InputState.Puzzle:
+                Instance.puzzle.Enable();
+                break;
         }
     }
 
-    public static void ToggleDialogueInput(bool state)
-    {
-        if (state)
-        {
-            Instance.nextDialogueAction.action.Enable();
-        }
-        else
-        {
-            Instance.nextDialogueAction.action.Disable();
-        }
-
-    }
     #endregion
 
     #region Variables
@@ -73,11 +85,15 @@ public class PlayerController : MonoTimeBehaviour
 
     private void Awake()
     {
-        playerInput = GetComponent<PlayerInput>();
+        //playerInput = GetComponent<PlayerInput>();
 
         Instance = this;
+        player = input.FindActionMap("Player");
+        ui = input.FindActionMap("UI");
+        dialogue = input.FindActionMap("Dialogue");
+        puzzle = input.FindActionMap("Puzzle");
+        ActivateInputState(InputState.Player); // Start in movement state
 
-        ToggleMovementInput(true); // Start in movement state
     }
 
     public override void TimeUpdate()
@@ -149,6 +165,10 @@ public class PlayerController : MonoTimeBehaviour
                         break;
                 }
             }
+        }
+        if (nextDialogueAction.action.WasCompletedThisFrame())
+        {
+            DialogueManager.Instance.DisplayNextDialogueLine();
         }
     }
 

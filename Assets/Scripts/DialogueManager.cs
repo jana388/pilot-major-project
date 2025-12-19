@@ -40,8 +40,7 @@ public class DialogueManager : MonoBehaviour
         isDialogueActive = true;
         dialogueBox.SetActive(true);
 
-        PlayerController.ToggleMovementInput(false); // Disable the players movement input
-        PlayerController.ToggleDialogueInput(true); // Enable the players dialogue input
+        PlayerController.ActivateInputState(PlayerController.InputState.Dialogue); // Disable the players movement input
        
 
         if (animator)
@@ -62,8 +61,7 @@ public class DialogueManager : MonoBehaviour
     {
         if (dialogueRoutine != null) StopCoroutine(dialogueRoutine);
 
-        PlayerController.ToggleMovementInput(true); // Enable the players movement input
-        PlayerController.ToggleDialogueInput(false); // Disable the players dialogue input
+        PlayerController.ActivateInputState(PlayerController.InputState.Player); // Enable the players movement input
 
 
         isDialogueActive = false;
