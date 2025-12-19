@@ -8,6 +8,7 @@ public class PlayerController : MonoTimeBehaviour
 
     [SerializeField] InputActionReference moveAction;
     [SerializeField] InputActionReference interactAction;
+    private PlayerInput playerInput;
 
 
     void ToggleInput(bool state)
@@ -53,13 +54,25 @@ public class PlayerController : MonoTimeBehaviour
 
     private void Awake()
     {
-        
+        playerInput = GetComponent<PlayerInput>();
     }
 
     public override void TimeUpdate()
     {
         Movement();
         Interact();
+    }
+
+    private void OnEnable()
+    {
+
+        playerInput.all[0].SwitchCurrentActionMap("SwitchMap");
+        playerInput.actions["SwitchMap"].performed += SwitchActionMap;
+    }
+
+    private void SwitchActionMap(InputAction.CallbackContext context)
+    {
+        playerInput.SwitchCurrentActionMap("Puzzle");
     }
 
     void Movement()
