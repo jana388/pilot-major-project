@@ -3,6 +3,7 @@ using UnityEngine;
 public class Puzzle : MonoBehaviour
 {
     public LetterChecker puzzlePiece;
+   
 
     public bool SolvePuzzle()
     {

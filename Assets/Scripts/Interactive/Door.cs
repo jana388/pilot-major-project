@@ -19,7 +19,7 @@ public class Door : MonoBehaviour
 
         _isOpen = open;
         collisionCollider.enabled = !open;
-        animator.SetBool("IsOpen", open); // TODO: Setup a door opening animation for any door objects
+        animator.SetBool("IsOpen", open);
         animator.SetTrigger("Trigger");
 
         StartCoroutine(DoorMovingProcess());

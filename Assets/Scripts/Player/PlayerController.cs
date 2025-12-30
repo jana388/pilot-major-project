@@ -32,7 +32,6 @@ public class PlayerController : MonoTimeBehaviour
     public InputState inputState;
 
     public static void ActivateInputState(InputState state)
-        // :3
     {
         Instance.inputState = state;
         Instance.player.Disable();
