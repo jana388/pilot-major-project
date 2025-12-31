@@ -1671,15 +1671,13 @@ GameObject:
   m_Component:
   - component: {fileID: 181354454}
   - component: {fileID: 181354453}
-  - component: {fileID: 181354456}
-  - component: {fileID: 181354457}
   m_Layer: 0
   m_Name: PadlockPuzzle
-  m_TagString: Item
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &181354453
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1733,56 +1731,6 @@ Transform:
   - {fileID: 1936334236}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &181354456
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 181354452}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.38, y: 0.73, z: 0.47}
-  m_Center: {x: -0.01, y: 0.51, z: -0.58}
---- !u!114 &181354457
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 181354452}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d38332fabcdc2364c998446e087537c6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _itemRequirement: []
-  _interactEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 181354452}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  _itemName: Padlock
 --- !u!1 &185444156
 GameObject:
   m_ObjectHideFlags: 0
@@ -8945,6 +8893,88 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &1465904540
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1465904543}
+  - component: {fileID: 1465904542}
+  - component: {fileID: 1465904541}
+  m_Layer: 6
+  m_Name: PadlockTrigger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1465904541
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1465904540}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad971078fcb571c41820bc08bc1b9baf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _itemRequirement: []
+  _interactEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 181354452}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+--- !u!65 &1465904542
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1465904540}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.38, y: 0.73, z: 0.47}
+  m_Center: {x: -0.05, y: 0.51, z: -0.58}
+--- !u!4 &1465904543
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1465904540}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -19.88, y: -0.255, z: -5.229}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1471332779
 GameObject:
   m_ObjectHideFlags: 0
@@ -12711,15 +12741,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5094661841970153948, guid: 83c96e3b44693d345bc31134d4fcd981, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4.6589413
+      value: -4.658941
       objectReference: {fileID: 0}
     - target: {fileID: 5094661841970153948, guid: 83c96e3b44693d345bc31134d4fcd981, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.6150904
+      value: 3.6150901
       objectReference: {fileID: 0}
     - target: {fileID: 5094661841970153948, guid: 83c96e3b44693d345bc31134d4fcd981, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -2.6372638
+      value: -2.6372635
       objectReference: {fileID: 0}
     - target: {fileID: 5094661841970153948, guid: 83c96e3b44693d345bc31134d4fcd981, type: 3}
       propertyPath: m_LocalRotation.w
@@ -12810,3 +12840,4 @@ SceneRoots:
   - {fileID: 1646881911}
   - {fileID: 1763134877}
   - {fileID: 181354454}
+  - {fileID: 1465904543}
