@@ -37,16 +37,10 @@ public class LockPuzzle : MonoBehaviour
 
     private void Start()
     {
-        EndPuzzle();
+        StartCoroutine(PuzzleStarts());
     }
 
-    void Awake()
-    {
-        if (playerDetected && interactAction.IsPressed())
-
-            PuzzleStarts();
-    }
-        void Update()
+    void Update()
     {
         if (_puzzleStarts == true)
         {
@@ -304,11 +298,13 @@ public class LockPuzzle : MonoBehaviour
 
     IEnumerator PuzzleStarts()
     {
+        Debug.Log("Puzzle starts");
         PlayerController.ActivateInputState(PlayerController.InputState.Puzzle);
         
         _lockCam.SetActive(true);
-        _lockInteractive.SetActive(false);
-        _lockPuzzle.SetActive(true);
+        _puzzleStarts = true;
+        //_lockInteractive.SetActive(false);
+        //_lockPuzzle.SetActive(true);
         //playerInput.SwitchCurrentActionMap("Puzzle"); 
         yield return new WaitForSeconds(0.2f); // small delay feels smoother
         //puzzleUI.Show();
