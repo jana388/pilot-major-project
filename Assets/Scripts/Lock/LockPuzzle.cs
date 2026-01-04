@@ -37,16 +37,29 @@ public class LockPuzzle : MonoBehaviour
 
     private void Start()
     {
-        EndPuzzle();
+        //EndPuzzle();
     }
 
     void Awake()
     {
-        if (playerDetected && interactAction.IsPressed())
-
-            PuzzleStarts();
+       
     }
-        void Update()
+
+    private void OnTriggerEnter(Collider collider)
+    {
+        if (collider.tag == "Item")
+        {
+            playerDetected = true;
+            interactAction = InputSystem.actions.FindAction("Interact");
+
+            if (playerDetected && interactAction.IsPressed())
+
+                PuzzleStarts();
+
+
+        }
+    }
+    void Update()
     {
         if (_puzzleStarts == true)
         {
@@ -263,15 +276,7 @@ public class LockPuzzle : MonoBehaviour
 
 
 
-    private void OnTriggerEnter(Collider collider)
-    {
-        if (collider.tag == "Player")
-        {
-            playerDetected = true;
-            interactAction = InputSystem.actions.FindAction("Interact");
-
-        }
-    }
+   
 
     private void OnTriggerExit(Collider other)
     {
