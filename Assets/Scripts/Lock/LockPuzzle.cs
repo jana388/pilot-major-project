@@ -15,9 +15,9 @@ public class LockPuzzle : MonoBehaviour
     [SerializeField] private GameObject _lockCam;
 
 
-    private InputActionMap puzzle;
-    private InputActionMap player;
-    private bool playerDetected;
+    //private InputActionMap puzzle;
+    //private InputActionMap player;
+    //private bool playerDetected;
     private bool puzzleStarts;
     private InputAction interactAction;
 
@@ -257,24 +257,24 @@ public class LockPuzzle : MonoBehaviour
 
 
 
-    private void OnTriggerEnter(Collider collider)
-    {
-        if (collider.tag == "Player")
-        {
-            playerDetected = true;
-            interactAction = InputSystem.actions.FindAction("Interact");
+    //private void OnTriggerEnter(Collider collider)
+    //{
+       // if (collider.tag == "Player")
+       // {
+          //  playerDetected = true;
+          //  interactAction = InputSystem.actions.FindAction("Interact");
 
-        }
-    }
+       // }
+   // }
 
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.tag == "Player")
-        {
-            playerDetected = false;
+   // private void OnTriggerExit(Collider other)
+   // {
+       // if (other.tag == "Player")
+      //  {
+        //    playerDetected = false;
             
-        }
-    }
+      //  }
+   // }
 
     public void EndPuzzle()
     {

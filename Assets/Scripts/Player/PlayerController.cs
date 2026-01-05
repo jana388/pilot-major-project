@@ -9,7 +9,9 @@ public class PlayerController : MonoTimeBehaviour
     [SerializeField] InputActionAsset input;
     [Header("Movement Inputs")]
     [SerializeField] InputActionReference moveAction;
+    [Header("Interaction Inputs")]
     [SerializeField] InputActionReference interactAction;
+    [SerializeField] GameObject _interactionIndicator;
     [Header("Dialogue Inputs")]
     [SerializeField] InputActionReference nextDialogueAction;
 
@@ -147,11 +149,13 @@ public class PlayerController : MonoTimeBehaviour
         {
             InteractableObject detectedObject = DetectInteractables(transform.position, _detectRadius, _interactableMask);
 
+
             if (_canInteract && detectedObject != null)
             {
                 if (detectedObject.gameObject.CompareTag("Item"))
                 {
                     InteractableObject_Item item = detectedObject as InteractableObject_Item;
+                  
                     heldItems.Add(item.ItemName);
                 }
                 switch (detectedObject.CheckItemRequirement())
@@ -202,6 +206,7 @@ public class PlayerController : MonoTimeBehaviour
         {
             //Debug.Log($"No hit at: {checkPosition}");
             return null;
+           
         }
     }
 
