@@ -5023,7 +5023,7 @@ MonoBehaviour:
   dialogueArea: {fileID: 834925131}
   dialogueBox: {fileID: 1757927763}
   isDialogueActive: 0
-  typingSpeed: 0.2
+  typingSpeed: 0.01
   animator: {fileID: 0}
 --- !u!4 &533092714
 Transform:

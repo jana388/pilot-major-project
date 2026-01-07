@@ -46,7 +46,6 @@ public class DialogueTrigger : MonoBehaviour
         if (collider.tag == "Player")
         {
             playerDetected = true;
-            //TriggerDialogue();
         }
     }
 
@@ -55,14 +54,16 @@ public class DialogueTrigger : MonoBehaviour
         if (other.tag == "Player")
         {
             playerDetected = false;
-            //TriggerDialogue();
         }
     }
 
     private void Update()
     {
-        if (playerDetected && interactAction.IsPressed())
+        if (playerDetected && PlayerController.Instance.inputState == PlayerController.InputState.Player && interactAction.WasPressedThisFrame())
+        {
             TriggerDialogue();
+        }
+
     }
 
 }

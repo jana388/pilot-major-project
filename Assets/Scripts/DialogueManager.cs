@@ -1,32 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using UnityEditor.ShaderGraph;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class DialogueManager : MonoBehaviour
 {
-
     public static DialogueManager Instance;
 
     public Image characterIcon;
     public TextMeshProUGUI characterName;
     public TextMeshProUGUI dialogueArea;
     public GameObject dialogueBox;
+
     private bool isTyping = false;
     private Coroutine typingCoroutine;
-
 
     private Queue<DialogueLine> lines = new();
 
     public bool isDialogueActive = false;
 
-    public float typingSpeed = 0.2f;
+    public float typingSpeed = 0.02f; // you can tweak this
 
     public Animator animator;
-
-    private Coroutine dialogueRoutine;
 
     private void Start()
     {
@@ -35,7 +31,6 @@ public class DialogueManager : MonoBehaviour
             Instance = this;
             dialogueBox.SetActive(false);
         }
-
     }
 
     public void StartDialogue(Dialogue dialogue)
@@ -43,43 +38,46 @@ public class DialogueManager : MonoBehaviour
         isDialogueActive = true;
         dialogueBox.SetActive(true);
 
-        PlayerController.ActivateInputState(PlayerController.InputState.Dialogue); // Disable the players movement input
-       
+        PlayerController.ActivateInputState(PlayerController.InputState.Dialogue);
 
         if (animator)
-        {
             animator.Play("show");
-        }
+
         lines.Clear();
 
         foreach (DialogueLine dialogueLine in dialogue.dialogueLines)
-        {
             lines.Enqueue(dialogueLine);
-        }
 
         DisplayNextDialogueLine();
     }
 
     public void CloseDialogue()
     {
-        if (dialogueRoutine != null) StopCoroutine(dialogueRoutine);
+        if (typingCoroutine != null)
+            StopCoroutine(typingCoroutine);
 
-        PlayerController.ActivateInputState(PlayerController.InputState.Player); // Enable the players movement input
-
+        PlayerController.ActivateInputState(PlayerController.InputState.Player);
 
         isDialogueActive = false;
         dialogueBox.SetActive(false);
+
         if (animator)
-        {
             animator.Play("hide");
-        }
     }
 
     public void DisplayNextDialogueLine()
     {
+        // If the line is still typing, finish it instead of advancing
+        if (isTyping)
+        {
+            FinishTypingCurrentLine();
+            return;
+        }
+
+        // If no more lines, close dialogue
         if (lines.Count == 0)
         {
-            Debug.Log("Dialogue queue empty — ignoring next line request.");
+            CloseDialogue();
             return;
         }
 
@@ -88,28 +86,37 @@ public class DialogueManager : MonoBehaviour
         characterIcon.sprite = currentLine.character.icon;
         characterName.text = currentLine.character.name;
 
-        StopAllCoroutines();
+        if (typingCoroutine != null)
+            StopCoroutine(typingCoroutine);
 
-        dialogueRoutine = StartCoroutine(TypeSentence(currentLine));
+        typingCoroutine = StartCoroutine(TypeSentence(currentLine.line));
     }
 
-    IEnumerator TypeSentence(DialogueLine dialogueLine)
+    IEnumerator TypeSentence(string sentence)
     {
+        isTyping = true;
         dialogueArea.text = "";
-        foreach (char letter in dialogueLine.line.ToCharArray())
+
+        foreach (char letter in sentence)
         {
+            // If player requested skip, break early
+            if (!isTyping)
+                break;
+
             dialogueArea.text += letter;
             yield return new WaitForSeconds(typingSpeed);
         }
+
+        // Ensure full line is shown
+        dialogueArea.text = sentence;
+        isTyping = false;
     }
 
-    void Update()
+    private void FinishTypingCurrentLine()
     {
-        if (isDialogueActive && lines.Count == 0)
-        {
-
-            CloseDialogue();
-
-        }
+        isTyping = false;
     }
 }
+
+
+

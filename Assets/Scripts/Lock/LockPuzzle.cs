@@ -303,8 +303,8 @@ public class LockPuzzle : MonoBehaviour
         
         _lockCam.SetActive(true);
         _puzzleStarts = true;
-        //_lockInteractive.SetActive(false);
-        //_lockPuzzle.SetActive(true);
+        _lockInteractive.SetActive(false);
+        _lockPuzzle.SetActive(true);
         //playerInput.SwitchCurrentActionMap("Puzzle"); 
         yield return new WaitForSeconds(0.2f); // small delay feels smoother
         //puzzleUI.Show();

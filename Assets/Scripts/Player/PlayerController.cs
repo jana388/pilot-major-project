@@ -163,8 +163,6 @@ public class PlayerController : MonoTimeBehaviour
         }
 
         Interact();
-
-        Debug.Log("STATE: " + inputState);
     }
 
     void Movement()
