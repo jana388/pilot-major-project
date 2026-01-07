@@ -45,7 +45,7 @@
             ],
             "bindings": [
                 {
-                    "name": "2D Vector",
+                    "name": "Keyboard",
                     "id": "aeaea2fb-c78b-4439-814c-41793807f27d",
                     "path": "2DVector",
                     "interactions": "",
@@ -100,7 +100,7 @@
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "2D Vector",
+                    "name": "Gamepad",
                     "id": "cba26a28-a511-42ff-beb6-c6f10694a52b",
                     "path": "2DVector",
                     "interactions": "",
@@ -960,6 +960,17 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
+                    "action": "SkipLine",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2050c463-45d0-4914-8e6f-ea1ab61dbe3d",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad",
                     "action": "SkipLine",
                     "isComposite": false,
                     "isPartOfComposite": false

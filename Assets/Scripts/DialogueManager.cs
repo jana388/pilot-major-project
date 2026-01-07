@@ -14,6 +14,9 @@ public class DialogueManager : MonoBehaviour
     public TextMeshProUGUI characterName;
     public TextMeshProUGUI dialogueArea;
     public GameObject dialogueBox;
+    private bool isTyping = false;
+    private Coroutine typingCoroutine;
+
 
     private Queue<DialogueLine> lines = new();
 
@@ -74,6 +77,12 @@ public class DialogueManager : MonoBehaviour
 
     public void DisplayNextDialogueLine()
     {
+        if (lines.Count == 0)
+        {
+            Debug.Log("Dialogue queue empty — ignoring next line request.");
+            return;
+        }
+
         DialogueLine currentLine = lines.Dequeue();
 
         characterIcon.sprite = currentLine.character.icon;

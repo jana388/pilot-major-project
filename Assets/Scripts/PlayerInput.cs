@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class PlayerInput : MonoTimeBehaviour
@@ -11,6 +12,7 @@ public class PlayerInput : MonoTimeBehaviour
         Puzzle
     }
     PlayState current;
+    internal Action<PlayerInput> onControlsChanged;
 
     public static object Dialogue { get; internal set; }
 

@@ -11,11 +11,9 @@ public class PlayerController : MonoTimeBehaviour
     [SerializeField] InputActionReference moveAction;
     [Header("Interaction Inputs")]
     [SerializeField] InputActionReference interactAction;
-    [SerializeField] GameObject _interactionIndicator;
     [Header("Dialogue Inputs")]
     [SerializeField] InputActionReference nextDialogueAction;
 
-    //private PlayerInput playerInput;
     private InputActionMap player;
     private InputActionMap ui;
     private InputActionMap dialogue;
@@ -40,6 +38,12 @@ public class PlayerController : MonoTimeBehaviour
         Instance.ui.Disable();
         Instance.puzzle.Disable();
         Instance.dialogue.Disable();
+
+        // Hide interaction prompt whenever we leave Player mode
+        if (state != InputState.Player)
+            Instance.interactionUI.HidePrompt();
+
+
         switch (state)
         {
             case InputState.Player:
@@ -77,30 +81,90 @@ public class PlayerController : MonoTimeBehaviour
 
     [Header("Checks")]
     [SerializeField] bool _isGrounded;
-    [SerializeField] bool _canInteract = true;
+    [SerializeField] bool _canInteract;
 
     [Header("Components")]
     [SerializeField] CharacterController characterController;
+
+    [SerializeField] private InteractionUI interactionUI;
+    private InteractableObject currentInteractable;
+    //private string currentControlScheme;
+    private bool usingGamepad;
+
 
     #endregion
 
     private void Awake()
     {
-        //playerInput = GetComponent<PlayerInput>();
-
         Instance = this;
+
         player = input.FindActionMap("Player");
         ui = input.FindActionMap("UI");
         dialogue = input.FindActionMap("Dialogue");
         puzzle = input.FindActionMap("Puzzle");
-        ActivateInputState(InputState.Player); // Start in movement state
+
+        ActivateInputState(InputState.Player);
+
+        //detect for control scheme changes
+        var playerInput = GetComponent<PlayerInput>();
+        if (playerInput != null)
+        {
+            // We cannot use currentControlScheme not successful so will use the gamepad boolean
+            // So we detect manually
+            if (playerInput != null)
+            {
+                // Initial detection
+                usingGamepad = Gamepad.current != null;
+
+                // Listen for changes
+                playerInput.onControlsChanged += OnControlsChanged;
+            }
+            else
+            {
+                Debug.LogWarning("PlayerInput component missing! Control scheme detection disabled.");
+                usingGamepad = false; // default to keyboard
+            }
+
+           
+        }
+    }
+
+    private void OnControlsChanged(PlayerInput input)
+    {
+        // If the gamepad was updated this frame, it is connected to the controllers scheme
+        if (Gamepad.current != null && Gamepad.current.wasUpdatedThisFrame)
+            usingGamepad = true;
+        else
+            usingGamepad = false;
+
+        Debug.Log("Using gamepad: " + usingGamepad);
+        RefreshPrompt();
 
     }
+
+
+
 
     public override void TimeUpdate()
     {
         Movement();
+        HandleInteractionPrompt();
+        // DEVICE SWITCHING CHECKS
+        if (Gamepad.current != null && Gamepad.current.wasUpdatedThisFrame && !usingGamepad)
+        {
+            usingGamepad = true;
+            RefreshPrompt();
+        }
+
+        if (Keyboard.current != null && Keyboard.current.anyKey.wasPressedThisFrame && usingGamepad)
+        {
+            usingGamepad = false;
+            RefreshPrompt();
+        }
+
         Interact();
+
+        Debug.Log("STATE: " + inputState);
     }
 
     void Movement()
@@ -129,13 +193,6 @@ public class PlayerController : MonoTimeBehaviour
             transform.forward = move;
         }
 
-        // Jump
-        //if (jumpAction.action.triggered && groundedPlayer)
-        //{
-        //    playerVelocity.y = Mathf.Sqrt(jumpHeight * -2.0f * gravityValue);
-        //}
-
-        // Apply gravity
         playerVelocity.y += gravityValue * Time.deltaTime;
 
         // Combine horizontal and vertical movement
@@ -143,36 +200,82 @@ public class PlayerController : MonoTimeBehaviour
         characterController.Move(finalMove * Time.deltaTime);
     }
 
-    void Interact()
+    void HandleInteractionPrompt()
     {
-        if (_canInteract && interactAction.action.WasCompletedThisFrame())
+        if (inputState != InputState.Player)
         {
-            InteractableObject detectedObject = DetectInteractables(transform.position, _detectRadius, _interactableMask);
+            interactionUI.HidePrompt();
+            return;
+        }
 
+        InteractableObject detectedObject = DetectInteractables(transform.position, _detectRadius, _interactableMask);
 
-            if (_canInteract && detectedObject != null)
+        if (detectedObject != null)
+        {
+            if (currentInteractable != detectedObject)
             {
-                if (detectedObject.gameObject.CompareTag("Item"))
-                {
-                    InteractableObject_Item item = detectedObject as InteractableObject_Item;
-                  
-                    heldItems.Add(item.ItemName);
-                }
-                switch (detectedObject.CheckItemRequirement())
-                {
-                    case ItemRequirement.NoItem:
-                        detectedObject.Interacted();
-                        break;
-                    case ItemRequirement.ItemRequired:
-                        detectedObject.Interacted(heldItems.ToArray());
-                        break;
-                }
+                currentInteractable = detectedObject;
+
+                interactionUI.ShowPrompt(
+                    detectedObject.KeyboardPrompt,
+                    detectedObject.GamepadPrompt,
+                    usingGamepad
+                );
             }
         }
-        if (nextDialogueAction.action.WasCompletedThisFrame())
+        else
+        {
+            currentInteractable = null;
+            interactionUI.HidePrompt();
+        }
+    }
+
+    private void RefreshPrompt()
+    {
+        if (currentInteractable != null)
+        {
+            interactionUI.ShowPrompt(
+                currentInteractable.KeyboardPrompt,
+                currentInteractable.GamepadPrompt,
+                usingGamepad
+            );
+        }
+    }
+
+
+    void Interact()
+    { 
+        if (_canInteract && interactAction.action.WasCompletedThisFrame())
+        {
+            
+            InteractableObject detectedObject = currentInteractable;
+
+            if (_canInteract && detectedObject != null)
+                {
+                    if (detectedObject.gameObject.CompareTag("Item"))
+                    {
+                        InteractableObject_Item item = detectedObject as InteractableObject_Item;
+
+                        heldItems.Add(item.ItemName);
+                    }
+                    switch (detectedObject.CheckItemRequirement())
+                    {
+                        case ItemRequirement.NoItem:
+                            detectedObject.Interacted();
+                            break;
+                        case ItemRequirement.ItemRequired:
+                            detectedObject.Interacted(heldItems.ToArray());
+                            break;
+                    }
+                }
+            
+        }
+        if (inputState == InputState.Dialogue &&
+    nextDialogueAction.action.WasCompletedThisFrame())
         {
             DialogueManager.Instance.DisplayNextDialogueLine();
         }
+
     }
 
     InteractableObject DetectInteractables(Vector3 checkPosition, float radius, LayerMask mask)

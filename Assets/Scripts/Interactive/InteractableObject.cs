@@ -5,13 +5,21 @@ using UnityEngine.Events;
 
 public class InteractableObject : MonoBehaviour, IInteractive
 {
+
+    [SerializeField] private string interactionPrompt = "Interact";
+    public string InteractionPrompt => interactionPrompt;
     [SerializeField] private string[] _itemRequirement;
     public string[] ItemRequirements { get { return _itemRequirement; } }
     [SerializeField] private UnityEvent _interactEvent;
+
+    [SerializeField] private string keyboardPrompt;
+    [SerializeField] private string gamepadPrompt;
+     public string KeyboardPrompt => keyboardPrompt;
+     public string GamepadPrompt => gamepadPrompt;
+
     public virtual void Interacted()
     {
         _interactEvent.Invoke();
-
         print("Just interacted");
     }
 
