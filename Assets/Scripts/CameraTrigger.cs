@@ -13,6 +13,7 @@ public class CameraTrigger : MonoBehaviour
    [SerializeField] public CinemachineCamera cam;
    [SerializeField] private Vector3 boxSize;
 
+
     BoxCollider box;
     Rigidbody rb;
 

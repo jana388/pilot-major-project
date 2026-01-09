@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
@@ -27,17 +28,19 @@ public class LockPuzzle : MonoBehaviour
 
     private int _cylinder01Step = 0;
     [SerializeField] private GameObject _cylinder01;
-    private int _cylinder02Step = 0;
+    private int _cylinder02Step = 1;
     [SerializeField] private GameObject _cylinder02;
-    private int _cylinder03Step = 0;
+    private int _cylinder03Step = 2;
     [SerializeField] private GameObject _cylinder03;
     private string _cylinder01Letter = "";
     private string _cylinder02Letter = "";
     private string _cylinder03Letter = "";
+    private int _oldPriority;
+
 
     private void Start()
     {
-        StartCoroutine(PuzzleStarts());
+      
     }
 
     void Update()
@@ -60,21 +63,21 @@ public class LockPuzzle : MonoBehaviour
                 if (_currentCylinder == 0)
                 {
                     _cylinder01Step = (_cylinder01Step + 1) % 10;
-                    _cylinder01.transform.localEulerAngles = new Vector3(_cylinder01Step * 36f, 0f, 0f);
+                    _cylinder01.transform.localRotation = Quaternion.Euler(_cylinder01Step * 36f, 0f, 0f);
                     Cylinder01Values();
                 }
 
                 if (_currentCylinder == 1)
                 {
                     _cylinder02Step = (_cylinder02Step + 1) % 10;
-                    _cylinder02.transform.localEulerAngles = new Vector3(_cylinder02Step * 36f, 0f, 0f);
+                    _cylinder02.transform.localRotation = Quaternion.Euler(_cylinder02Step * 36f, 0f, 0f);
                     Cylinder02Values();
                 }
 
                 if (_currentCylinder == 2)
                 {
                     _cylinder03Step = (_cylinder03Step + 1) % 10;
-                    _cylinder03.transform.localEulerAngles = new Vector3(_cylinder03Step * 36f, 0f, 0f);
+                    _cylinder03.transform.localRotation = Quaternion.Euler(_cylinder03Step * 36f, 0f, 0f);
                     Cylinder03Values();
                 }
                 
@@ -84,22 +87,22 @@ public class LockPuzzle : MonoBehaviour
             {
                 if (_currentCylinder == 0)
                 {
-                    _cylinder01Step = (_cylinder01Step - 1 + 8) % 10;
-                    _cylinder01.transform.localEulerAngles = new Vector3(_cylinder01Step * 36f, 0f, 0f);
+                    _cylinder01Step = (_cylinder01Step - 1 + 10) % 10;
+                    _cylinder01.transform.localRotation = Quaternion.Euler(_cylinder01Step * 36f, 0f, 0f);
                     Cylinder01Values();
                 }
 
                 if (_currentCylinder == 1)
                 {
-                    _cylinder02Step = (_cylinder02Step - 1 + 8) % 10;
-                    _cylinder02.transform.localEulerAngles = new Vector3(_cylinder02Step * 36f, 0f, 0f);
+                    _cylinder02Step = (_cylinder02Step - 1 + 10) % 10;
+                    _cylinder02.transform.localRotation = Quaternion.Euler(_cylinder02Step * 36f, 0f, 0f);
                     Cylinder02Values();
                 }
 
                 if (_currentCylinder == 2)
                 {
-                    _cylinder03Step = (_cylinder03Step - 1 + 8) % 10;
-                    _cylinder03.transform.localEulerAngles = new Vector3(_cylinder03Step * 36f, 0f, 0f);
+                    _cylinder03Step = (_cylinder03Step - 1 + 10) % 10;
+                    _cylinder03.transform.localRotation = Quaternion.Euler(_cylinder03Step * 36f, 0f, 0f);
                     Cylinder03Values();
                 }
             }
@@ -113,7 +116,7 @@ public class LockPuzzle : MonoBehaviour
 
         if (enteredCode == _puzzleCode)
         {
-            StartCoroutine("Completed Puzzle");
+            StartCoroutine(CompletedPuzzle());
             Debug.Log("Puzzle is complete Code: " + enteredCode);
         }
 
@@ -255,37 +258,7 @@ public class LockPuzzle : MonoBehaviour
         CheckCode();
     }
 
-
-
-    //private void OnTriggerEnter(Collider collider)
-    //{
-       // if (collider.tag == "Player")
-       // {
-          //  playerDetected = true;
-          //  interactAction = InputSystem.actions.FindAction("Interact");
-
-       // }
-   // }
-
-   // private void OnTriggerExit(Collider other)
-   // {
-       // if (other.tag == "Player")
-      //  {
-        //    playerDetected = false;
-            
-      //  }
-   // }
-
-    public void EndPuzzle()
-    {
-        _lockInteractive.SetActive(true);  
-        _lockPuzzle.SetActive(false);
-        _lockCam.SetActive(false);
-        Debug.Log("Puzzle ended");
-        _puzzleStarts = false;
-        PlayerController.ActivateInputState(PlayerController.InputState.Player);
-
-    }
+ 
     IEnumerator CompletedPuzzle()
     {
         //open lock animation
@@ -295,26 +268,57 @@ public class LockPuzzle : MonoBehaviour
         _lockCam.SetActive(false);
         _puzzleStarts = false;
     }
-
-    IEnumerator PuzzleStarts()
+    public void StartPuzzle()
     {
-        Debug.Log("Puzzle starts");
-        PlayerController.ActivateInputState(PlayerController.InputState.Puzzle);
-        
-        _lockCam.SetActive(true);
-        _puzzleStarts = true;
-        _lockInteractive.SetActive(false);
-        _lockPuzzle.SetActive(true);
-        //playerInput.SwitchCurrentActionMap("Puzzle"); 
-        yield return new WaitForSeconds(0.2f); // small delay feels smoother
-        //puzzleUI.Show();
-        Debug.Log("Puzzle started");
+        Debug.Log("StartPuzzle() was called!");
 
-        //yield return new WaitUntil(() => puzzle.IsSolved);
-
-        //ExitPuzzle();
+        StartCoroutine(PuzzleStarts());
     }
 
 
-    
+    IEnumerator PuzzleStarts()
+    {
+        
+            Debug.Log("Puzzle starts");
+
+            PlayerController.ActivateInputState(PlayerController.InputState.Puzzle);
+
+            var cam = _lockCam.GetComponent<CinemachineCamera>();
+            _oldPriority = cam.Priority;
+            cam.Priority = 100;
+
+            _lockCam.SetActive(true);
+            _puzzleStarts = true;
+            _lockInteractive.SetActive(false);
+            _lockPuzzle.SetActive(true);
+
+            yield return new WaitForSeconds(0.2f);
+
+            Debug.Log("Puzzle started");
+    }
+
+
+    public void EndPuzzle()
+    {
+
+        // ?? Restore old priority
+        var cam = _lockCam.GetComponent<CinemachineCamera>();
+        cam.Priority = _oldPriority;
+
+        // (optional) if you toggled active state:
+        // _lockCam.SetActive(false);
+
+
+       // _lockCam.GetComponent<CinemachineCamera>().Priority = oldPriority;
+        _lockInteractive.SetActive(true);
+        _lockPuzzle.SetActive(false);
+        _lockCam.SetActive(false);
+        Debug.Log("Puzzle ended");
+        _puzzleStarts = false;
+        PlayerController.ActivateInputState(PlayerController.InputState.Player);
+
+    }
+
+
+
 }
