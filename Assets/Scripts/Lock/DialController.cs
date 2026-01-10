@@ -2,24 +2,17 @@ using UnityEngine;
 
 public class DialController : MonoBehaviour
 {
-    public int CurrentStep { get; private set; } = 0;
-
-    private const float StepAngle = 36f; // 360° / 10 numbers
+    public int CurrentStep { get; private set; }
 
     public void RotateUp()
     {
         CurrentStep = (CurrentStep + 1) % 10;
-        ApplyRotation();
+        transform.localRotation = Quaternion.Euler(CurrentStep * 36f, 0, 0);
     }
 
     public void RotateDown()
     {
         CurrentStep = (CurrentStep - 1 + 10) % 10;
-        ApplyRotation();
-    }
-
-    private void ApplyRotation()
-    {
-        transform.localRotation = Quaternion.Euler(CurrentStep * StepAngle, 0f, 0f);
+        transform.localRotation = Quaternion.Euler(CurrentStep * 36f, 0, 0);
     }
 }

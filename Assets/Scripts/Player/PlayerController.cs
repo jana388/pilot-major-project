@@ -13,6 +13,12 @@ public class PlayerController : MonoTimeBehaviour
     [SerializeField] InputActionReference interactAction;
     [Header("Dialogue Inputs")]
     [SerializeField] InputActionReference nextDialogueAction;
+    [Header("Puzzle Inputs")]
+    [SerializeField]  InputActionReference puzzleRotateAction;
+    [SerializeField]  InputActionReference puzzleMoveAction;
+    [SerializeField]  InputActionReference puzzleSubmitAction;
+    [SerializeField]  InputActionReference puzzleCancelAction;
+
 
     private InputActionMap player;
     private InputActionMap ui;
@@ -33,6 +39,7 @@ public class PlayerController : MonoTimeBehaviour
 
     public static void ActivateInputState(InputState state)
     {
+        Debug.Log("[PlayerController] Switching input state to: " + state);
         Instance.inputState = state;
         Instance.player.Disable();
         Instance.ui.Disable();
@@ -47,16 +54,20 @@ public class PlayerController : MonoTimeBehaviour
         switch (state)
         {
             case InputState.Player:
+                Instance.DisablePuzzleInput();
                 Instance.player.Enable();
                 break;
             case InputState.UI:
+                Instance.DisablePuzzleInput();
                 Instance.ui.Enable();
                 break;
             case InputState.Dialogue:
+                Instance.DisablePuzzleInput();
                 Instance.dialogue.Enable();
                 break;
             case InputState.Puzzle:
                 Instance.puzzle.Enable();
+                Instance.EnablePuzzleInput();
                 break;
         }
     }
@@ -309,6 +320,69 @@ public class PlayerController : MonoTimeBehaviour
             return null;
            
         }
+    }
+
+    private void EnablePuzzleInput()
+    {
+        Debug.Log("[PlayerController] EnablePuzzleInput");
+
+        if (puzzleMoveAction == null) Debug.LogError("puzzleMoveAction is NULL");
+        if (puzzleRotateAction == null) Debug.LogError("puzzleRotateAction is NULL");
+        if (puzzleSubmitAction == null) Debug.LogError("puzzleSubmitAction is NULL");
+        if (puzzleCancelAction == null) Debug.LogError("puzzleCancelAction is NULL");
+
+        puzzleRotateAction.action.performed += OnPuzzleRotate;
+        puzzleMoveAction.action.performed += OnPuzzleMove;
+        puzzleSubmitAction.action.performed += OnPuzzleSubmit;
+        puzzleCancelAction.action.performed += OnPuzzleCancel;
+
+
+        puzzleRotateAction.action.Enable();
+        puzzleMoveAction.action.Enable();
+        puzzleSubmitAction.action.Enable();
+        puzzleCancelAction.action.Enable();
+    }
+
+    private void OnPuzzleRotate(InputAction.CallbackContext ctx)
+    {
+        float value = ctx.ReadValue<float>();
+        Debug.Log("[PuzzleInput] Rotate value: " + value);
+        PuzzleManager.Instance.HandleRotate(value);
+    }
+
+    private void OnPuzzleMove(InputAction.CallbackContext ctx)
+    {
+        float value = ctx.ReadValue<float>();
+        Debug.Log("[PuzzleInput] Move value: " + value);
+        PuzzleManager.Instance.HandleMove(value);
+    }
+
+    private void OnPuzzleSubmit(InputAction.CallbackContext ctx)
+    {
+        Debug.Log("[PuzzleInput] Submit");
+        PuzzleManager.Instance.HandleSubmit();
+    }
+
+    private void OnPuzzleCancel(InputAction.CallbackContext ctx)
+    {
+        Debug.Log("[PuzzleInput] Cancel");
+        PuzzleManager.Instance.HandleCancel();
+    }
+
+    private void DisablePuzzleInput()
+    {
+        Debug.Log("[PlayerController] DisablePuzzleInput");
+
+        puzzleRotateAction.action.performed -= OnPuzzleRotate;
+        puzzleMoveAction.action.performed -= OnPuzzleMove;
+        puzzleSubmitAction.action.performed -= OnPuzzleSubmit;
+        puzzleCancelAction.action.performed -= OnPuzzleCancel;
+
+
+        puzzleRotateAction.action.Disable();
+        puzzleMoveAction.action.Disable();
+        puzzleSubmitAction.action.Disable();
+        puzzleCancelAction.action.Disable();
     }
 
     private void OnDrawGizmos()
