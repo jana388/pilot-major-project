@@ -4,44 +4,48 @@ using Unity.VisualScripting;
 using UnityEngine.Rendering;
 
 [RequireComponent(typeof(BoxCollider))]
-[RequireComponent (typeof(Rigidbody))]
-
+[ExecuteAlways]
 
 public class CameraTrigger : MonoBehaviour
 {
-    public static int cameraPriority = 12;
    [SerializeField] public CinemachineCamera cam;
    [SerializeField] private Vector3 boxSize;
 
-
-    BoxCollider box;
-    Rigidbody rb;
+   private BoxCollider box;
 
     private void Awake()
     {
         box = GetComponent<BoxCollider>();
-        rb = GetComponent<Rigidbody>();
-        box.isTrigger = true;
-        box.size = boxSize;
-
-        rb.isKinematic = true;
+        ApplyBoxSize();
     }
+
+    private void OnValidate()
+    {
+        if (box == null) box = GetComponent<BoxCollider>();
+        ApplyBoxSize();
+    }
+
+    private void ApplyBoxSize()
+    {
+        if (box != null)
+        {
+            box.isTrigger = true;
+            box.size = boxSize;
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            CameraSwitcher.SwitchCamera(cam);
+        }
+    } 
 
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.green;
-        Gizmos.DrawWireCube(transform.position, boxSize);
-    }
-
-
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.CompareTag("Player"))
-        {
-            //if (CameraSwitcher.ActiveCamera != cam) CameraSwitcher.SwitchCamera(cam);
-            CameraTrigger.cameraPriority += 1;
-            cam.Priority = CameraTrigger.cameraPriority;
-        }
+        Gizmos.matrix = transform.localToWorldMatrix;
+        Gizmos.DrawWireCube(box.center, box.size);
     }
 }

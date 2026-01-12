@@ -11,6 +11,10 @@ public class CameraSwitcher : MonoBehaviour
 
     public static CinemachineCamera ActiveCamera = null;
 
+    // This is your stacking priority counter
+    private static int nextPriority = 10;
+
+
     public static bool IsActiveCamera(CinemachineCamera camera)
     {
         return camera == ActiveCamera;
@@ -18,28 +22,34 @@ public class CameraSwitcher : MonoBehaviour
 
     public static void SwitchCamera(CinemachineCamera camera)
     {
-        camera.Priority = 0;
+        // Increase priority each time a camera is activated
+        nextPriority++;
+
+        camera.Priority = nextPriority;
         ActiveCamera = camera;
 
-        foreach (CinemachineCamera c in cameras)
-        {
-            if (c != camera && c.Priority != 0)
-            {
-                c.Priority = 0;
-            }
-        }
+        // No need to zero out other cameras — stacking handles it
+
     }
 
     public static void Register(CinemachineCamera camera)
     {
-        cameras.Add(camera);
-        Debug.Log("Camera registered:" + camera);
+        if (!cameras.Contains(camera))
+        {
+            cameras.Add(camera);
+            Debug.Log("Camera registered: " + camera);
+        }
+
     }
 
     public static void Unregister(CinemachineCamera camera)
     {
-        cameras.Remove(camera);
-        Debug.Log("Camera unregistered:" + camera);
+        if (cameras.Contains(camera))
+        {
+            cameras.Remove(camera);
+            Debug.Log("Camera unregistered: " + camera);
+        }
+
     }
 
 }
