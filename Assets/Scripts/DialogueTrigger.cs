@@ -29,6 +29,7 @@ public class DialogueTrigger : MonoBehaviour
     private bool playerDetected;
 
     private InputAction interactAction;
+    [SerializeField] private GameContext context;
 
     public void TriggerDialogue()
     {
@@ -59,7 +60,7 @@ public class DialogueTrigger : MonoBehaviour
 
     private void Update()
     {
-        if (playerDetected && PlayerController.Instance.inputState == PlayerController.InputState.Player && interactAction.WasPressedThisFrame())
+        if (playerDetected && context.playerController.inputState == PlayerController.InputState.Player && interactAction.WasPressedThisFrame())
         {
             TriggerDialogue();
         }

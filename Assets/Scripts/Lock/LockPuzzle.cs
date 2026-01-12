@@ -11,14 +11,15 @@ public class LockPuzzle : MonoBehaviour, IPuzzleInputReceiver
     private DialController[] cylinders;
     private int selectedIndex = 0;
     private bool active;
-    [SerializeField] private string correctCode = "111";
+
+    [SerializeField] private string correctCode;
     [SerializeField] private CinemachineCamera lockCam;
-    [SerializeField] Transform safeDoor;
+    [SerializeField] private Transform safeDoor;
+
     [SerializeField] private GameObject interactableObject;
     [SerializeField] private GameObject puzzleObject;
-
-
-
+    [SerializeField] private PuzzleManager puzzleManager;
+    [SerializeField] private GameContext context;
 
     private void Awake()
     {
@@ -28,38 +29,57 @@ public class LockPuzzle : MonoBehaviour, IPuzzleInputReceiver
     public void Activate()
     {
         active = true;
-        
-        // Switch cameras
+        // Switch to puzzle camera
         lockCam.Priority = 20;
 
-        // Disable the whole interactable object
+        // Hide interactable object and show puzzle UI
         interactableObject.SetActive(false);
-
         puzzleObject.SetActive(true);
-        PuzzleManager.Instance.StartPuzzle(this);
-        Debug.Log("LockPuzzle.Activate() was called!");
+        context.playerController.ActivateInputState(PlayerController.InputState.Puzzle);
 
+
+        // Tell PuzzleManager we started a puzzle
+        context.puzzleManager.StartPuzzle(this);
+
+        //show back button
+        context.interactionUI.ShowBackButton(context.playerController.UsingGamepad);
+
+
+        Debug.Log("LockPuzzle.Activate() was called!");
     }
 
     public void Deactivate()
     {
         active = false;
-        // Re-enable the interactable object
+
+        // Restore interactable object and hide puzzle UI
         interactableObject.SetActive(true);
         puzzleObject.SetActive(false);
-        PuzzleManager.Instance.EndPuzzle();
-        // Switch back
+
+        context.playerController.ActivateInputState(PlayerController.InputState.Player);
+
+
+        // Tell PuzzleManager we ended the puzzle
+        context.puzzleManager.EndPuzzle();
+
+        // Switch camera back
         lockCam.Priority = 1;
-        // Re-enable collider so player can interact again
-       
+
+        //hide back button
+        context.interactionUI.HideBackButton();
+
+        //also hide puzzle solved 
+        context.interactionUI.HidePuzzleSolved();
     }
 
     public void OnRotateInput(float input)
     {
         if (!active) return;
 
-        if (input > 0.5f) cylinders[selectedIndex].RotateUp();
-        else if (input < -0.5f) cylinders[selectedIndex].RotateDown();
+        if (input > 0.5f)
+            cylinders[selectedIndex].RotateUp();
+        else if (input < -0.5f)
+            cylinders[selectedIndex].RotateDown();
 
         CheckCode();
     }
@@ -68,12 +88,18 @@ public class LockPuzzle : MonoBehaviour, IPuzzleInputReceiver
     {
         if (!active) return;
 
-        if (input > 0.5f) selectedIndex = (selectedIndex + 1) % 3;
-        else if (input < -0.5f) selectedIndex = (selectedIndex - 1 + 3) % 3;
+        if (input > 0.5f)
+            selectedIndex = (selectedIndex + 1) % 3;
+        else if (input < -0.5f)
+            selectedIndex = (selectedIndex - 1 + 3) % 3;
     }
 
     public void OnSubmitInput() { }
-    public void OnCancelInput() => Deactivate();
+
+    public void OnCancelInput()
+    {
+        Deactivate();
+    }
 
     private void CheckCode()
     {
@@ -81,17 +107,39 @@ public class LockPuzzle : MonoBehaviour, IPuzzleInputReceiver
             cylinder01.CurrentStep.ToString() +
             cylinder02.CurrentStep.ToString() +
             cylinder03.CurrentStep.ToString();
+        Debug.Log("[PUZZLE] Checking code: " + code);
+        Debug.Log("[PUZZLE] Correct code is: " + correctCode);
 
-        if (code == "111")
+
+        if (code == correctCode)
         {
             Debug.Log("Lock puzzle solved!");
+            //show puzzle completed UI
+            context.interactionUI.ShowPuzzleSolved();
+            StartCoroutine(HandlePuzzleSolved());
             StartCoroutine(OpenSafe());
-            //safeAnimator.SetTrigger("Open");
             Deactivate();
         }
     }
 
-    IEnumerator OpenSafe()
+    private IEnumerator HandlePuzzleSolved()
+    {
+        // Optional: play a sound or animation here
+
+        context.interactionUI.ShowPuzzleSolved();
+
+        yield return new WaitForSeconds(20f); // adjust the delay as you like
+
+       
+
+        // Optional: wait again before opening the safe
+        yield return new WaitForSeconds(0.5f);
+
+        StartCoroutine(OpenSafe());
+        Deactivate();
+    }
+
+    private IEnumerator OpenSafe()
     {
         Quaternion start = safeDoor.localRotation;
         Quaternion end = Quaternion.Euler(0, 90, 0);
@@ -104,20 +152,4 @@ public class LockPuzzle : MonoBehaviour, IPuzzleInputReceiver
             yield return null;
         }
     }
-
-    private void PuzzleCompleted()
-    {
-        InteractionUI.Instance.ShowPuzzleSolved();
-
-        // Optional: delay before closing puzzle
-        StartCoroutine(CloseAfterDelay(1.5f));
-    }
-
-    private IEnumerator CloseAfterDelay(float delay)
-    {
-        yield return new WaitForSeconds(delay);
-        InteractionUI.Instance.HidePuzzleSolved();
-        Deactivate();
-    }
-
 }

@@ -25,8 +25,6 @@ public class PlayerController : MonoTimeBehaviour
     private InputActionMap dialogue;
     private InputActionMap puzzle;
 
-    public static PlayerController Instance;
-
     public enum InputState
     {
         Player,
@@ -37,37 +35,39 @@ public class PlayerController : MonoTimeBehaviour
 
     public InputState inputState;
 
-    public static void ActivateInputState(InputState state)
+    public void ActivateInputState(InputState state)
     {
         Debug.Log("[PlayerController] Switching input state to: " + state);
-        Instance.inputState = state;
-        Instance.player.Disable();
-        Instance.ui.Disable();
-        Instance.puzzle.Disable();
-        Instance.dialogue.Disable();
+        inputState = state;
+
+        player.Disable();
+        ui.Disable();
+        puzzle.Disable();
+        dialogue.Disable();
+
 
         // Hide interaction prompt whenever we leave Player mode
         if (state != InputState.Player)
-            Instance.interactionUI.HidePrompt();
+            interactionUI.HidePrompt();
 
 
         switch (state)
         {
             case InputState.Player:
-                Instance.DisablePuzzleInput();
-                Instance.player.Enable();
+                DisablePuzzleInput();
+                player.Enable();
                 break;
             case InputState.UI:
-                Instance.DisablePuzzleInput();
-                Instance.ui.Enable();
+                DisablePuzzleInput();
+                ui.Enable();
                 break;
             case InputState.Dialogue:
-                Instance.DisablePuzzleInput();
-                Instance.dialogue.Enable();
+                DisablePuzzleInput();
+                dialogue.Enable();
                 break;
             case InputState.Puzzle:
-                Instance.puzzle.Enable();
-                Instance.EnablePuzzleInput();
+                puzzle.Enable();
+                EnablePuzzleInput();
                 break;
         }
     }
@@ -96,18 +96,20 @@ public class PlayerController : MonoTimeBehaviour
 
     [Header("Components")]
     [SerializeField] CharacterController characterController;
+    [SerializeField] private PuzzleManager puzzleManager;
+    [SerializeField] private GameContext context;
 
     [SerializeField] private InteractionUI interactionUI;
     private InteractableObject currentInteractable;
     //private string currentControlScheme;
     private bool usingGamepad;
+    public bool UsingGamepad => usingGamepad;
 
 
     #endregion
 
     private void Awake()
     {
-        Instance = this;
 
         player = input.FindActionMap("Player");
         ui = input.FindActionMap("UI");
@@ -118,8 +120,8 @@ public class PlayerController : MonoTimeBehaviour
 
         //detect for control scheme changes
         var playerInput = GetComponent<PlayerInput>();
-        if (playerInput != null)
-        {
+        
+        
             // We cannot use currentControlScheme not successful so will use the gamepad boolean
             // So we detect manually
             if (playerInput != null)
@@ -137,7 +139,7 @@ public class PlayerController : MonoTimeBehaviour
             }
 
            
-        }
+        
     }
 
     private void OnControlsChanged(PlayerInput input)
@@ -213,7 +215,7 @@ public class PlayerController : MonoTimeBehaviour
     {
         if (inputState != InputState.Player)
         {
-            interactionUI.HidePrompt();
+            context.interactionUI.HidePrompt();
             return;
         }
 
@@ -225,7 +227,7 @@ public class PlayerController : MonoTimeBehaviour
             {
                 currentInteractable = detectedObject;
 
-                interactionUI.ShowPrompt(
+                context.interactionUI.ShowPrompt(
                     detectedObject.KeyboardPrompt,
                     detectedObject.GamepadPrompt,
                     usingGamepad
@@ -235,7 +237,7 @@ public class PlayerController : MonoTimeBehaviour
         else
         {
             currentInteractable = null;
-            interactionUI.HidePrompt();
+            context.interactionUI.HidePrompt();
         }
     }
 
@@ -243,7 +245,7 @@ public class PlayerController : MonoTimeBehaviour
     {
         if (currentInteractable != null)
         {
-            interactionUI.ShowPrompt(
+            context.interactionUI.ShowPrompt(
                 currentInteractable.KeyboardPrompt,
                 currentInteractable.GamepadPrompt,
                 usingGamepad
@@ -279,8 +281,7 @@ public class PlayerController : MonoTimeBehaviour
                 }
             
         }
-        if (inputState == InputState.Dialogue &&
-    nextDialogueAction.action.WasCompletedThisFrame())
+        if (inputState == InputState.Dialogue && nextDialogueAction.action.WasCompletedThisFrame())
         {
             DialogueManager.Instance.DisplayNextDialogueLine();
         }
@@ -324,13 +325,6 @@ public class PlayerController : MonoTimeBehaviour
 
     private void EnablePuzzleInput()
     {
-        Debug.Log("[PlayerController] EnablePuzzleInput");
-
-        if (puzzleMoveAction == null) Debug.LogError("puzzleMoveAction is NULL");
-        if (puzzleRotateAction == null) Debug.LogError("puzzleRotateAction is NULL");
-        if (puzzleSubmitAction == null) Debug.LogError("puzzleSubmitAction is NULL");
-        if (puzzleCancelAction == null) Debug.LogError("puzzleCancelAction is NULL");
-
         puzzleRotateAction.action.performed += OnPuzzleRotate;
         puzzleMoveAction.action.performed += OnPuzzleMove;
         puzzleSubmitAction.action.performed += OnPuzzleSubmit;
@@ -347,26 +341,26 @@ public class PlayerController : MonoTimeBehaviour
     {
         float value = ctx.ReadValue<float>();
         Debug.Log("[PuzzleInput] Rotate value: " + value);
-        PuzzleManager.Instance.HandleRotate(value);
+        context.puzzleManager.HandleRotate(value);
     }
 
     private void OnPuzzleMove(InputAction.CallbackContext ctx)
     {
         float value = ctx.ReadValue<float>();
         Debug.Log("[PuzzleInput] Move value: " + value);
-        PuzzleManager.Instance.HandleMove(value);
+        context.puzzleManager.HandleMove(value);
     }
 
     private void OnPuzzleSubmit(InputAction.CallbackContext ctx)
     {
         Debug.Log("[PuzzleInput] Submit");
-        PuzzleManager.Instance.HandleSubmit();
+        context.puzzleManager.HandleSubmit();
     }
 
     private void OnPuzzleCancel(InputAction.CallbackContext ctx)
     {
         Debug.Log("[PuzzleInput] Cancel");
-        PuzzleManager.Instance.HandleCancel();
+        context.puzzleManager.HandleCancel();
     }
 
     private void DisablePuzzleInput()

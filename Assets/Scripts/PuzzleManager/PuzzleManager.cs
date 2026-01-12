@@ -2,35 +2,25 @@ using UnityEngine;
 
 public class PuzzleManager : MonoBehaviour
 {
-    public static PuzzleManager Instance;
-
-    private IPuzzleInputReceiver activePuzzle { get; private set; }
-
-
-    private void Awake()
-    {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(gameObject);
-            return;
-        }
-
-        Instance = this;
-    }
+    private IPuzzleInputReceiver activePuzzle;
+    [SerializeField] private GameContext context;
 
     public void StartPuzzle(IPuzzleInputReceiver puzzle)
     {
         Debug.Log("[PuzzleManager] StartPuzzle called with: " + puzzle);
+
         activePuzzle = puzzle;
-        InteractionUI.Instance.ShowBackButton(PlayerController.Instance.UsingGamepad);
-        PlayerController.ActivateInputState(PlayerController.InputState.Puzzle);
+
+        // Switch player input to puzzle mode
+        context.playerController.ActivateInputState(PlayerController.InputState.Puzzle);
     }
 
     public void EndPuzzle()
     {
         activePuzzle = null;
-        InteractionUI.Instance.HideBackButton();
-        PlayerController.ActivateInputState(PlayerController.InputState.Player);
+
+        // Return player input to normal
+        context.playerController.ActivateInputState(PlayerController.InputState.Player);
     }
 
     public void HandleRotate(float value)

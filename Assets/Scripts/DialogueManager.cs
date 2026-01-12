@@ -12,6 +12,7 @@ public class DialogueManager : MonoBehaviour
     public TextMeshProUGUI characterName;
     public TextMeshProUGUI dialogueArea;
     public GameObject dialogueBox;
+    [SerializeField] private GameContext context;
 
     private bool isTyping = false;
     private Coroutine typingCoroutine;
@@ -38,7 +39,7 @@ public class DialogueManager : MonoBehaviour
         isDialogueActive = true;
         dialogueBox.SetActive(true);
 
-        PlayerController.ActivateInputState(PlayerController.InputState.Dialogue);
+        context.playerController.ActivateInputState(PlayerController.InputState.Dialogue);
 
         if (animator)
             animator.Play("show");
@@ -56,7 +57,7 @@ public class DialogueManager : MonoBehaviour
         if (typingCoroutine != null)
             StopCoroutine(typingCoroutine);
 
-        PlayerController.ActivateInputState(PlayerController.InputState.Player);
+        context.playerController.ActivateInputState(PlayerController.InputState.Player);
 
         isDialogueActive = false;
         dialogueBox.SetActive(false);
