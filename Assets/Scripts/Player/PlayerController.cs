@@ -157,7 +157,6 @@ public class PlayerController : MonoTimeBehaviour
 
 
 
-
     public override void TimeUpdate()
     {
         Movement();
@@ -258,7 +257,8 @@ public class PlayerController : MonoTimeBehaviour
     { 
         if (_canInteract && interactAction.action.WasCompletedThisFrame())
         {
-            
+            Debug.Log("Interact called, currentInteractable = " + currentInteractable);
+
             InteractableObject detectedObject = currentInteractable;
 
             if (_canInteract && detectedObject != null)

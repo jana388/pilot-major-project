@@ -14,7 +14,7 @@ public class LetterChecker : MonoBehaviour
     public LetterChecker SolvePuzzle()
     {
         transform.Rotate(new Vector3(0, 0, -90));
-        float z = Mathf.RoundToInt(transform.rotation.z);
+        float z = Mathf.RoundToInt(transform.eulerAngles.z % 360);
         return (z == 0) ? next : this;
     }
 }
