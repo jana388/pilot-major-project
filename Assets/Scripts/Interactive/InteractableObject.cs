@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
@@ -16,6 +16,7 @@ public class InteractableObject : MonoBehaviour, IInteractive
     [SerializeField] private string gamepadPrompt;
      public string KeyboardPrompt => keyboardPrompt;
      public string GamepadPrompt => gamepadPrompt;
+    [SerializeField] private GameContext context;
 
     public virtual void Interacted()
     {
@@ -36,7 +37,16 @@ public class InteractableObject : MonoBehaviour, IInteractive
                 check++;
         }
 
-        if (check == requirement) _interactEvent.Invoke();
+        if (check == requirement)
+        {
+            _interactEvent.Invoke();
+        }
+
+        else
+        {
+            // need more items to interact
+          
+        }
 
         print("Requested to look for items");
     }

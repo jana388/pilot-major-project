@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Unity.Cinemachine;
-using UnityEditor.PackageManager;
 
 public class CameraSwitcher : MonoBehaviour
 {
@@ -11,7 +10,7 @@ public class CameraSwitcher : MonoBehaviour
 
     public static CinemachineCamera ActiveCamera = null;
 
-    // This is your stacking priority counter
+    // This is stacking priority counter
     private static int nextPriority = 10;
 
 

@@ -1,3 +1,4 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
 
@@ -12,6 +13,8 @@ public class InteractionUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI puzzleControlsText;
     [SerializeField] private GameObject lockControlsPanel;
     [SerializeField] private TextMeshProUGUI lockControlsText;
+   
+
 
     public void ShowPuzzleControls(string keyboardText, string gamepadText, bool usingGamepad)
     {
@@ -77,7 +80,9 @@ public class InteractionUI : MonoBehaviour
         puzzleSolvedPanel.SetActive(false);
     }
 
-    
+   
+   
+
 
 }
 

@@ -1091,7 +1091,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c97405d70a865cd44b1d0e8bdaf345df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _debugMode: 1
+  _debugMode: 0
   _MainMenuContainer: {fileID: 1074720505}
   _CreditsMenuContainer: {fileID: 1509859844}
   _SettingsMenuContainer: {fileID: 2050999926}
