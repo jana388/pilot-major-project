@@ -8,6 +8,8 @@ public class CameraSwitcher : MonoBehaviour
 
     static List<CinemachineCamera> cameras = new List<CinemachineCamera>();
 
+    public static event System.Action<CinemachineCamera> OnCameraSwitched;
+
     public static CinemachineCamera ActiveCamera = null;
 
     // This is stacking priority counter
@@ -27,7 +29,9 @@ public class CameraSwitcher : MonoBehaviour
         camera.Priority = nextPriority;
         ActiveCamera = camera;
 
-        // No need to zero out other cameras — stacking handles it
+        // send the info about the camera switch to the player controller
+        OnCameraSwitched?.Invoke(camera);
+        // not zeroing the cameras out because we have the stacking method now (at least for now) 
 
     }
 

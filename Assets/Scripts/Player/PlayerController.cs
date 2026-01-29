@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -105,6 +106,9 @@ public class PlayerController : MonoTimeBehaviour
     private bool usingGamepad;
     public bool UsingGamepad => usingGamepad;
 
+    [SerializeField] private float cameraSwitchDelay = 0.3f;
+    private float cameraSwitchCooldown = 0f;
+
 
     #endregion
 
@@ -138,9 +142,18 @@ public class PlayerController : MonoTimeBehaviour
                 usingGamepad = false; // default to keyboard
             }
 
-           
-        
+            //detect the camera switch? maybe need another way to name/connect to other camera scripts
+            CameraSwitcher.OnCameraSwitched += OnCameraChanged;
+
+
+
+
     }
+
+            private void OnDestroy()
+            {
+                CameraSwitcher.OnCameraSwitched -= OnCameraChanged;
+            }
 
     private void OnControlsChanged(PlayerInput input)
     {
@@ -179,12 +192,16 @@ public class PlayerController : MonoTimeBehaviour
 
     void Movement()
     {
+        //Ground check
         _isGrounded = characterController.isGrounded;
         if (_isGrounded && playerVelocity.y < 0)
         {
             playerVelocity.y = 0f;
         }
+
+        //Camera-realitve movement
         // this changes the input controls to match the direction of the camera that is currently active
+
         var forward = Camera.main.transform.forward;
         var right = Camera.main.transform.right;
         forward.y = 0f;
@@ -197,16 +214,43 @@ public class PlayerController : MonoTimeBehaviour
         Vector3 move = right * input.x + forward * input.y;
         move = Vector3.ClampMagnitude(move, 1f);
 
-        if (move != Vector3.zero)
+        //Camera Switch input delayyy
+
+        // If camera just switched, ignore movement change until the cooldown expires
+        if (cameraSwitchCooldown > 0f)
         {
-            transform.forward = move;
+            cameraSwitchCooldown -= Time.deltaTime;
+
+            // Only resume when the player releases and presses a new direction
+            if (input.magnitude > 0.1f)
+                return;
+
+
         }
 
-        playerVelocity.y += gravityValue * Time.deltaTime;
+        // Normal Movement - should be running when the cooldown is finished
+            if (move != Vector3.zero)
+            {
+                transform.forward = move;
+            }
 
-        // Combine horizontal and vertical movement
-        Vector3 finalMove = (move * playerSpeed) + (playerVelocity.y * Vector3.up);
-        characterController.Move(finalMove * Time.deltaTime);
+            playerVelocity.y += gravityValue * Time.deltaTime;
+
+            // Combine horizontal and vertical movement
+            Vector3 finalMove = (move * playerSpeed) + (playerVelocity.y * Vector3.up);
+            characterController.Move(finalMove * Time.deltaTime);
+        
+    }
+
+
+    public void OnCameraSwitched()
+    {
+        cameraSwitchCooldown = cameraSwitchDelay;
+    }
+
+    private void OnCameraChanged(CinemachineCamera cam)
+    {
+        cameraSwitchCooldown = cameraSwitchDelay;
     }
 
     void HandleInteractionPrompt()

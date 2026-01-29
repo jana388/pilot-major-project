@@ -291,6 +291,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cam: {fileID: 1907586325}
   boxSize: {x: 1.64, y: 1, z: 0.98}
+  context: {fileID: 0}
 --- !u!65 &52771152
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1420,6 +1421,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cam: {fileID: 1744506519}
   boxSize: {x: 1.37, y: 1, z: 2.02}
+  context: {fileID: 0}
 --- !u!65 &166389672
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5276,6 +5278,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cam: {fileID: 1632559413}
   boxSize: {x: 1.35, y: 1, z: 1.99}
+  context: {fileID: 0}
 --- !u!65 &421140288
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5379,6 +5382,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cam: {fileID: 805360967}
   boxSize: {x: 0.99, y: 1, z: 0.85}
+  context: {fileID: 0}
 --- !u!65 &426177341
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5749,6 +5753,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cam: {fileID: 1395299482}
   boxSize: {x: 1.35, y: 1, z: 0.96}
+  context: {fileID: 0}
 --- !u!65 &440455746
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7003,6 +7008,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cam: {fileID: 558680083}
   boxSize: {x: 1.35, y: 1, z: 1.99}
+  context: {fileID: 0}
 --- !u!65 &584802036
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7417,6 +7423,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cam: {fileID: 1142668946}
   boxSize: {x: 1.52, y: 1, z: 0.85}
+  context: {fileID: 0}
 --- !u!65 &636946518
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7594,6 +7601,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cam: {fileID: 992844550}
   boxSize: {x: 1.28, y: 1, z: 1.17}
+  context: {fileID: 0}
 --- !u!65 &637905317
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -9663,6 +9671,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cam: {fileID: 514016137}
   boxSize: {x: 0.99, y: 1, z: 0.85}
+  context: {fileID: 0}
 --- !u!65 &887553618
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -10773,6 +10782,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cam: {fileID: 1642290574}
   boxSize: {x: 1.35, y: 1, z: 1.99}
+  context: {fileID: 0}
 --- !u!65 &1103739076
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -10891,6 +10901,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cam: {fileID: 1806328114}
   boxSize: {x: 0.49, y: 1.44, z: -0.53}
+  context: {fileID: 0}
 --- !u!1 &1142668944
 GameObject:
   m_ObjectHideFlags: 0
@@ -11188,6 +11199,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cam: {fileID: 1312316067}
   boxSize: {x: 1.35, y: 1, z: 1.99}
+  context: {fileID: 0}
 --- !u!65 &1165734528
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -12256,6 +12268,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cam: {fileID: 957293829}
   boxSize: {x: 1, y: 1, z: 1}
+  context: {fileID: 0}
 --- !u!65 &1306318551
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -12704,6 +12717,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cam: {fileID: 393449961}
   boxSize: {x: 0.63, y: 1, z: 1.99}
+  context: {fileID: 0}
 --- !u!65 &1368154503
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -15339,6 +15353,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cam: {fileID: 2005694214}
   boxSize: {x: 0.65, y: 1, z: 0.53}
+  context: {fileID: 0}
 --- !u!65 &1674197910
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -16133,6 +16148,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cam: {fileID: 1542793385}
   boxSize: {x: 1.35, y: 1, z: 1.99}
+  context: {fileID: 1725207796}
 --- !u!65 &1751759237
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -17918,6 +17934,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cam: {fileID: 2018581402}
   boxSize: {x: 1.35, y: 1, z: 1.99}
+  context: {fileID: 0}
 --- !u!65 &1959967718
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -19785,6 +19802,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 3186014708387274074, guid: 87183c611d7d90a4e8ef9d6785e9f447, type: 3}
+      propertyPath: context
+      value: 
+      objectReference: {fileID: 1725207796}
+    - target: {fileID: 3186014708387274074, guid: 87183c611d7d90a4e8ef9d6785e9f447, type: 3}
       propertyPath: keyboardPrompt
       value: Press Space to interact
       objectReference: {fileID: 0}
@@ -19798,7 +19819,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6715697467265371539, guid: 87183c611d7d90a4e8ef9d6785e9f447, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4.54
+      value: -4.498
       objectReference: {fileID: 0}
     - target: {fileID: 6715697467265371539, guid: 87183c611d7d90a4e8ef9d6785e9f447, type: 3}
       propertyPath: m_LocalPosition.y
@@ -21974,6 +21995,10 @@ PrefabInstance:
       propertyPath: puzzleMoveAction
       value: 
       objectReference: {fileID: -1724127994839351129, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+    - target: {fileID: 2621200096167255492, guid: 83c96e3b44693d345bc31134d4fcd981, type: 3}
+      propertyPath: cameraSwitchDelay
+      value: 0.2
+      objectReference: {fileID: 0}
     - target: {fileID: 2621200096167255492, guid: 83c96e3b44693d345bc31134d4fcd981, type: 3}
       propertyPath: puzzleCancelAction
       value: 

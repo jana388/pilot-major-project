@@ -10,8 +10,9 @@ public class CameraTrigger : MonoBehaviour
 {
    [SerializeField] public CinemachineCamera cam;
    [SerializeField] private Vector3 boxSize;
+    [SerializeField] private GameContext context;
 
-   private BoxCollider box;
+    private BoxCollider box;
 
     private void Awake()
     {
@@ -36,10 +37,16 @@ public class CameraTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
-        {
+        if (!other.CompareTag("Player"))
+            return;
+
+            if (cam == null)
+            {
+                Debug.LogError("CameraTrigger has no camera assigned on: " + gameObject.name);
+                return;
+            }
+
             CameraSwitcher.SwitchCamera(cam);
-        }
     } 
 
     private void OnDrawGizmos()
