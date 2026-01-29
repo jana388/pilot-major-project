@@ -8082,7 +8082,6 @@ GameObject:
   - component: {fileID: 728004812}
   - component: {fileID: 728004811}
   - component: {fileID: 728004810}
-  - component: {fileID: 728004809}
   - component: {fileID: 728004817}
   m_Layer: 6
   m_Name: Piece of Letter (5)
@@ -8091,19 +8090,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &728004809
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 728004808}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 07bb6bd8028a8b3419b5351606995092, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  unlocker: {fileID: 1183242544}
 --- !u!114 &728004810
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13756,7 +13742,7 @@ MonoBehaviour:
         m_CallState: 2
   keyboardPrompt: Press Space to interact
   gamepadPrompt: Press X to interact
-  context: {fileID: 0}
+  context: {fileID: 1725207796}
 --- !u!65 &1465904542
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -19454,7 +19440,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00613f4754ff4c84a922b61bd0767f09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  next: {fileID: 0}
+  next: {fileID: 757124616}
 --- !u!114 &2145959358
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21574,7 +21560,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactionPrompt: Interact
-  _itemRequirement: []
+  _itemRequirement:
+  - 
+  - 
+  - 
+  - 
   _interactEvent:
     m_PersistentCalls:
       m_Calls:

@@ -184,7 +184,7 @@ public class PlayerController : MonoTimeBehaviour
         {
             playerVelocity.y = 0f;
         }
-
+        // this changes the input controls to match the direction of the camera that is currently active
         var forward = Camera.main.transform.forward;
         var right = Camera.main.transform.right;
         forward.y = 0f;
@@ -194,7 +194,6 @@ public class PlayerController : MonoTimeBehaviour
 
         // Read input
         Vector2 input = moveAction.action.ReadValue<Vector2>();
-        // Vector3 move = new Vector3(input.x, 0, input.y);
         Vector3 move = right * input.x + forward * input.y;
         move = Vector3.ClampMagnitude(move, 1f);
 

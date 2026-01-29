@@ -30,7 +30,7 @@ public class LockPuzzle : MonoBehaviour, IPuzzleInputReceiver
     {
         active = true;
         // Switch to puzzle camera
-        lockCam.Priority = 20;
+        lockCam.Priority = 300;
 
         // Hide interactable object and show puzzle UI
         interactableObject.SetActive(false);

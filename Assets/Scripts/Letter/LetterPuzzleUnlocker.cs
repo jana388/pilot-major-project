@@ -5,7 +5,7 @@ public class LetterPuzzleUnlocker : MonoBehaviour
     [SerializeField] private int piecesRequired = 4;
     [SerializeField] private InteractableObject puzzleInteractable;
 
-    private int piecesCollected = 0;
+    private int piecesCollected = 4;
 
     public void RegisterPieceCollected()
     {
