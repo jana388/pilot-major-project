@@ -1,6 +1,8 @@
+using System.Collections;
 using System.Collections.Generic;
 using Unity.Cinemachine;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.InputSystem;
 
 public class PlayerController : MonoTimeBehaviour
@@ -251,7 +253,26 @@ public class PlayerController : MonoTimeBehaviour
     private void OnCameraChanged(CinemachineCamera cam)
     {
         cameraSwitchCooldown = cameraSwitchDelay;
+
+        //triggering camera static effect
+        StartCoroutine(PlayCameraTransitionEffect());
+
     }
+
+    private IEnumerator PlayCameraTransitionEffect()
+    {
+        //Enable CCTV overlay
+        //cctvOverlay.SetActive(true);
+
+        //play a static sound
+        //audioSource.PlayOneShot(staticNoise);
+
+        yield return new WaitForSeconds(0.15f);
+
+        //fade out or disable
+        //cctvOverlay.SetActive(false);
+    }
+
 
     void HandleInteractionPrompt()
     {
