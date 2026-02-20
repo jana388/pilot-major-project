@@ -1,0 +1,17 @@
+This package contains the Shader Graph and Material.
+
+The shader was created in Unity 2022.3.46f1, but should work for all Unity versions onwards.
+This shader requires the Unity Universal Render Pipeline (URP) to work!
+
+To set up:
+- Create a new Universal Render Pipeline Asset
+- Under the 'Renderer' asset, click Add Renderer Feature
+- Select 'Pixelate Feature'
+- Apply the Pipeline asset to your projects Graphics settings.
+- Done!
+
+If you have any issues, just @mostambitiouscrow on discord. :)
+
+
+Be sure to credit me (Samuel White) in-game and use my LinkedIn for the credits please!
+www.linkedin.com/in/samuel-white-5369a92b0

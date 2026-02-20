@@ -4,6 +4,7 @@ using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering.Universal.Internal;
 
 public class PlayerController : MonoTimeBehaviour
 {
@@ -27,6 +28,9 @@ public class PlayerController : MonoTimeBehaviour
     private InputActionMap ui;
     private InputActionMap dialogue;
     private InputActionMap puzzle;
+
+    private Vector3 forward;
+    private Vector3 right;
 
     public enum InputState
     {
@@ -204,15 +208,19 @@ public class PlayerController : MonoTimeBehaviour
         //Camera-realitve movement
         // this changes the input controls to match the direction of the camera that is currently active
 
-        var forward = Camera.main.transform.forward;
-        var right = Camera.main.transform.right;
-        forward.y = 0f;
-        right.y = 0f;
-        forward.Normalize();
-        right.Normalize();
+        if (moveAction.action.WasPressedThisFrame())
+        {
+            forward = Camera.main.transform.forward; //transform.up
+            forward.y = 0f;
+            forward.Normalize();
+            right = Camera.main.transform.right;
+            right.y = 0f;
+            right.Normalize();
+        }
 
         // Read input
         Vector2 input = moveAction.action.ReadValue<Vector2>();
+        bool change = moveAction.action.WasPressedThisFrame();
         Vector3 move = right * input.x + forward * input.y;
         move = Vector3.ClampMagnitude(move, 1f);
 
