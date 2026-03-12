@@ -8280,7 +8280,6 @@ GameObject:
   - component: {fileID: 728004812}
   - component: {fileID: 728004811}
   - component: {fileID: 728004810}
-  - component: {fileID: 728004817}
   m_Layer: 6
   m_Name: Piece of Letter (2)
   m_TagString: Item
@@ -8425,38 +8424,6 @@ Transform:
   - {fileID: 1575060740}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &728004817
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 728004808}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ad971078fcb571c41820bc08bc1b9baf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  interactionPrompt: Interact
-  _itemRequirement: []
-  _interactEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 728004814}
-        m_TargetAssemblyTypeName: LetterPiece, Assembly-CSharp
-        m_MethodName: OnCollected
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  keyboardPrompt: Press Space to interact
-  gamepadPrompt: Press X to interact
-  context: {fileID: 0}
 --- !u!1 &757124614
 GameObject:
   m_ObjectHideFlags: 0
@@ -14527,7 +14494,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1542793384}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a267a7f0fbe768c4db74dc13cc46999d, type: 3}
   m_Name: 
@@ -18383,7 +18350,7 @@ MonoBehaviour:
   Lens:
     FieldOfView: 60.000004
     OrthographicSize: 5
-    NearClipPlane: 0.3
+    NearClipPlane: 0.01
     FarClipPlane: 1000
     Dutch: 0
     ModeOverride: 0
@@ -22644,10 +22611,30 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 841744155907738198, guid: 83c96e3b44693d345bc31134d4fcd981, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 841744155907738198, guid: 83c96e3b44693d345bc31134d4fcd981, type: 3}
+      propertyPath: outlineMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: 60f2ccde8b790584b88626bab21a5875, type: 2}
     - target: {fileID: 1909824750037288524, guid: 83c96e3b44693d345bc31134d4fcd981, type: 3}
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2299330069821308806, guid: 83c96e3b44693d345bc31134d4fcd981, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2299330069821308806, guid: 83c96e3b44693d345bc31134d4fcd981, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 6d8132946aaba2942a14254be2204e31, type: 2}
+    - target: {fileID: 2299330069821308806, guid: 83c96e3b44693d345bc31134d4fcd981, type: 3}
+      propertyPath: 'm_Materials.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 60f2ccde8b790584b88626bab21a5875, type: 2}
     - target: {fileID: 2621200096167255492, guid: 83c96e3b44693d345bc31134d4fcd981, type: 3}
       propertyPath: context
       value: 
@@ -22754,7 +22741,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5094661841970153948, guid: 83c96e3b44693d345bc31134d4fcd981, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -3.319956
+      value: -3.2744782
       objectReference: {fileID: 0}
     - target: {fileID: 5094661841970153948, guid: 83c96e3b44693d345bc31134d4fcd981, type: 3}
       propertyPath: m_LocalRotation.w
@@ -22802,7 +22789,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8475700164304516177, guid: 83c96e3b44693d345bc31134d4fcd981, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -3.81
+      value: -3.826
       objectReference: {fileID: 0}
     - target: {fileID: 8475700164304516177, guid: 83c96e3b44693d345bc31134d4fcd981, type: 3}
       propertyPath: m_LocalRotation.w

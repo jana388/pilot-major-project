@@ -281,7 +281,7 @@ public class PlayerController : MonoTimeBehaviour
         //cctvOverlay.SetActive(false);
     }
 
-
+    private InteractableObject _lastSelectedInteractable;
     void HandleInteractionPrompt()
     {
         if (inputState != InputState.Player)
@@ -303,10 +303,13 @@ public class PlayerController : MonoTimeBehaviour
                     detectedObject.GamepadPrompt,
                     usingGamepad
                 );
+                _lastSelectedInteractable = detectedObject;
+                _lastSelectedInteractable.SetOutline(true); // Activate the outline material
             }
         }
         else
         {
+            if (_lastSelectedInteractable != null) _lastSelectedInteractable.SetOutline(false); // Deactivate the outline material
             currentInteractable = null;
             context.interactionUI.HidePrompt();
         }

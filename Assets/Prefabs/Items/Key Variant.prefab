@@ -194,6 +194,8 @@ MonoBehaviour:
       m_Calls: []
   keyboardPrompt: Press Space to interact
   gamepadPrompt: Press X to interact
+  context: {fileID: 0}
+  outlineMaterial: {fileID: 2100000, guid: 60f2ccde8b790584b88626bab21a5875, type: 2}
   _itemName: Key
 --- !u!65 &1489027011314034571
 BoxCollider:

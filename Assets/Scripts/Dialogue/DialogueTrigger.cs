@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -30,6 +32,8 @@ public class DialogueTrigger : MonoBehaviour
 
     private InputAction interactAction;
     [SerializeField] private GameContext context;
+    //[SerializeField] private Material outlineMaterial;
+    private Outline outline;
 
     public void TriggerDialogue()
     {
@@ -40,13 +44,28 @@ public class DialogueTrigger : MonoBehaviour
     private void Awake()
     {
         interactAction = InputSystem.actions.FindAction("Interact");
+
+        // Setup separate outline material
+        //outlineMaterial = new Material(outlineMaterial);
+        outline = gameObject.GetOrAddComponent<Outline>();
+        outline.OutlineWidth = Settings.instance.outlineWidth;
+        outline.enabled = false;
+
+        // Assign the new outline material to this mesh renderer
+        //if (!TryGetComponent<MeshRenderer>(out var meshRenderer)) meshRenderer = GetComponentInChildren<MeshRenderer>();
+        //var mats = meshRenderer.materials.ToList();
+        //mats.Add(outlineMaterial);
+        //meshRenderer.SetMaterials(mats);
     }
 
+    private const string outlineStringID = "_EnableOutline";
     private void OnTriggerEnter(Collider collider)
     {
         if (collider.tag == "Player")
         {
             playerDetected = true;
+            //outlineMaterial.SetInt(outlineStringID, 1); // Enable outline shader
+            outline.enabled = true;
         }
     }
 
@@ -55,6 +74,8 @@ public class DialogueTrigger : MonoBehaviour
         if (other.tag == "Player")
         {
             playerDetected = false;
+            //outlineMaterial.SetInt(outlineStringID, 0); // Disable outline shader
+            outline.enabled = false;
         }
     }
 

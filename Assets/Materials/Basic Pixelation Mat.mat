@@ -114,7 +114,7 @@ Material:
     - _Pixel_Size: 5
     - _Pixelate: 1
     - _Posterize: 1
-    - _Posterize_Value: 191
+    - _Posterize_Value: 212
     - _QueueOffset: 0
     - _ReceiveShadows: 1
     - _Smoothness: 0.5
