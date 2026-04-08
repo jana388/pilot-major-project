@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41fb9dd5c3958a042a1447fb126c0fbd, type: 3}
   m_Name: Settings
   m_EditorClassIdentifier: 
-  outlineWidth: 12
+  outlineWidth: 16.7

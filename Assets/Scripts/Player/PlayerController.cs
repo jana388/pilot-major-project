@@ -150,10 +150,6 @@ public class PlayerController : MonoTimeBehaviour
 
             //detect the camera switch? maybe need another way to name/connect to other camera scripts
             CameraSwitcher.OnCameraSwitched += OnCameraChanged;
-
-
-
-
     }
 
             private void OnDestroy()
