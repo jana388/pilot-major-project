@@ -57,6 +57,7 @@ public class InteractableObject : MonoBehaviour, IInteractive
 
         if (check == requirement)
         {
+            print("Collected items");
             _interactEvent.Invoke();
         }
 
@@ -66,7 +67,7 @@ public class InteractableObject : MonoBehaviour, IInteractive
           
         }
 
-        print("Requested to look for items");
+        //print("Requested to look for items");
     }
 
     public ItemRequirement CheckItemRequirement()

@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 7491810639471096781}
   - component: {fileID: 1419983175613979013}
   - component: {fileID: 7263606129538556101}
-  - component: {fileID: 6207836246957313501}
   m_Layer: 0
   m_Name: LiftDoorLeft
   m_TagString: Untagged
@@ -29,11 +28,11 @@ Transform:
   m_GameObject: {fileID: 455871378629259837}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.102, z: 0.432}
+  m_LocalPosition: {x: 0, y: -0.102, z: 0.43200016}
   m_LocalScale: {x: 0.04472717, y: 1.2969869, z: 0.41397443}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 444492980982685502}
+  m_Father: {fileID: 6609727250581980942}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &7491810639471096781
 MeshFilter:
@@ -109,28 +108,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!95 &6207836246957313501
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 455871378629259837}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 899d2bc315255794a98a002e224a0c68, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &753222144041548427
 GameObject:
   m_ObjectHideFlags: 0
@@ -306,7 +283,7 @@ GameObject:
   - component: {fileID: 2022362462965660233}
   - component: {fileID: 6548834946904734153}
   - component: {fileID: 4908389995807065290}
-  - component: {fileID: 5482545245242729568}
+  - component: {fileID: 1993243605936573083}
   m_Layer: 0
   m_Name: LiftDoorRight
   m_TagString: Untagged
@@ -327,7 +304,7 @@ Transform:
   m_LocalScale: {x: 0.04472717, y: 1.2969869, z: 0.41397443}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 444492980982685502}
+  m_Father: {fileID: 6609727250581980942}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &2022362462965660233
 MeshFilter:
@@ -403,28 +380,26 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!95 &5482545245242729568
-Animator:
-  serializedVersion: 7
+--- !u!114 &1993243605936573083
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1977162912650557522}
   m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 899d2bc315255794a98a002e224a0c68, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2d8418b0b9634b1892b0268dd9c2743, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  boneShape: 1
+  drawBones: 1
+  drawTripods: 0
+  boneSize: 1
+  tripodSize: 1
+  boneColor: {r: 0, g: 0, b: 1, a: 0.5}
+  m_Transforms:
+  - {fileID: 7784573446081492407}
 --- !u!1 &2184389215521430423
 GameObject:
   m_ObjectHideFlags: 0
@@ -546,6 +521,62 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!1 &3248609653034432076
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6609727250581980942}
+  - component: {fileID: 376496570376352635}
+  m_Layer: 0
+  m_Name: Doors
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6609727250581980942
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3248609653034432076}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 9149032996942511721}
+  - {fileID: 7784573446081492407}
+  m_Father: {fileID: 444492980982685502}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &376496570376352635
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3248609653034432076}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 1eaf9bba33ccd6641955edb65ba52730, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &6877104431005643090
 GameObject:
   m_ObjectHideFlags: 0
@@ -655,8 +686,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 9149032996942511721}
-  - {fileID: 7784573446081492407}
+  - {fileID: 6609727250581980942}
   - {fileID: 6140126183900095193}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -729,11 +759,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 4702180743562964480}
+  insideCamera: {fileID: 0}
+  destinationCamera: {fileID: 0}
   collisionCollider: {fileID: 2412336337060071956}
-  _Open: 0
-  _Close: 0
-  _liftOpenDuration: 1.5
-  _liftCloseDuration: 1
+  context: {fileID: 0}
+  liftPuzzle: {fileID: 0}
+  _isBeingOpened: 0
 --- !u!1 &8884595660382173209
 GameObject:
   m_ObjectHideFlags: 0

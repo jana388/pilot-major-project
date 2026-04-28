@@ -5,10 +5,10 @@ using UnityEngine;
 public class LiftController : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] private Animator animator;
+    [SerializeField] Animator animator;
     [SerializeField] private CinemachineCamera insideCamera;
     [SerializeField] private CinemachineCamera destinationCamera;
-    [SerializeField] private Collider collisionCollider;
+    [SerializeField] Collider collisionCollider;
     [SerializeField] private GameContext context;
     [SerializeField] private LiftPuzzleManager liftPuzzle;
 
@@ -17,10 +17,12 @@ public class LiftController : MonoBehaviour
     private bool isOpen = false;
     private bool isBusy = false; // prevents spamming the button
 
+    [SerializeField] bool _isBeingOpened;
+
     // Called by InteractableObject
     public void ToggleDoor()
     {
-        if (isBusy) return;
+        if (_isBeingOpened) return;
 
         isBusy = true;
         isOpen = !isOpen;
@@ -62,7 +64,7 @@ public class LiftController : MonoBehaviour
         }
 
         // Play lift movement animation
-        animator.SetTrigger("LiftMove");
+        animator.SetTrigger("RightDoorOpen");
 
         // Wait for lift animation
         yield return new WaitForSeconds(2f);
