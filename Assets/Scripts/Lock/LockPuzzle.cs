@@ -20,6 +20,7 @@ public class LockPuzzle : MonoBehaviour, IPuzzleInputReceiver
     [SerializeField] private GameObject puzzleObject;
     [SerializeField] private PuzzleManager puzzleManager;
     [SerializeField] private GameContext context;
+    [SerializeField] private Animator animator;
 
     private void Awake()
     {
@@ -29,7 +30,6 @@ public class LockPuzzle : MonoBehaviour, IPuzzleInputReceiver
     public void Activate()
     {
         active = true;
-        // Switch to puzzle camera
         lockCam.Priority = 300;
 
         // Hide interactable object and show puzzle UI
@@ -37,8 +37,6 @@ public class LockPuzzle : MonoBehaviour, IPuzzleInputReceiver
         puzzleObject.SetActive(true);
         context.playerController.ActivateInputState(PlayerController.InputState.Puzzle);
 
-
-        // Tell PuzzleManager we started a puzzle
         context.puzzleManager.StartPuzzle(this);
 
         //show back button
@@ -113,7 +111,7 @@ public class LockPuzzle : MonoBehaviour, IPuzzleInputReceiver
 
         if (code == correctCode)
         {
-            Debug.Log("Lock puzzle solved!");
+            Debug.Log("Lock puzzle solved");
             //show puzzle completed UI
             context.interactionUI.ShowPuzzleSolved();
             StartCoroutine(HandlePuzzleSolved());
@@ -124,16 +122,10 @@ public class LockPuzzle : MonoBehaviour, IPuzzleInputReceiver
 
     private IEnumerator HandlePuzzleSolved()
     {
-        // Optional: play a sound or animation here
 
         context.interactionUI.ShowPuzzleSolved();
 
-        yield return new WaitForSeconds(20f); // adjust the delay as you like
-
-       
-
-        // Optional: wait again before opening the safe
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(20f);
 
         StartCoroutine(OpenSafe());
         Deactivate();
@@ -141,15 +133,7 @@ public class LockPuzzle : MonoBehaviour, IPuzzleInputReceiver
 
     private IEnumerator OpenSafe()
     {
-        Quaternion start = safeDoor.localRotation;
-        Quaternion end = Quaternion.Euler(0, 90, 0);
-
-        float t = 0;
-        while (t < 1)
-        {
-            t += Time.deltaTime;
-            safeDoor.localRotation = Quaternion.Slerp(start, end, t);
-            yield return null;
-        }
+        yield return new WaitForSeconds(0.5f);
+        animator.SetTrigger("Open");
     }
 }

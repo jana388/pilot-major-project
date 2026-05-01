@@ -38,7 +38,6 @@ public class PuzzleManager : MonoBehaviour
         context.playerController.ActivateInputState(PlayerController.InputState.Puzzle);
     }
 
-    // Back button for all puzzles
     //interactionUI.ShowBackButton(usingGamepad);
 
 
@@ -59,14 +58,10 @@ public class PuzzleManager : MonoBehaviour
     public void EndPuzzle()
     {
         activePuzzle = null;
-
-        // Hide puzzle control prompts
         interactionUI.HidePuzzleControls();
         interactionUI.HideLockControls();
         interactionUI.HideBackButton();
 
-
-        // Return player input to normal
         context.playerController.ActivateInputState(PlayerController.InputState.Player);
     }
 
@@ -97,7 +92,6 @@ public class PuzzleManager : MonoBehaviour
 
     private IEnumerator PuzzleSolvedRoutine()
     {
-        // Small pause so the player sees the final action
         yield return new WaitForSeconds(0.4f);
 
         interactionUI.ShowPuzzleSolved();
