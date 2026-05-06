@@ -22,6 +22,6 @@ public class TextUpdater : MonoBehaviour
 
     private void UpdateFont()
     {
-        textMeshPro.font = GameSettings.DoDyslexiaFont ? GameSettings.DyslexicFont : GameSettings.DefaultFont;
+        if (textMeshPro != null) textMeshPro.font = GameSettings.DoDyslexiaFont ? GameSettings.DyslexicFont : GameSettings.DefaultFont;
     }
 }

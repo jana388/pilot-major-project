@@ -38,7 +38,8 @@ public class InteractableObject : MonoBehaviour, IInteractive
 
     public virtual void Interacted()
     {
-        _interactEvent.Invoke();
+        _interactEvent?.Invoke();
+        gameObject.SetActive(false);
         print("Just interacted");
     }
 
