@@ -9,7 +9,7 @@ public class InteractableObject_Item : InteractableObject
     public override void Interacted()
     {
         base.Interacted();
-
+        Debug.Log("Hide");
         gameObject.SetActive(false);
     }
 

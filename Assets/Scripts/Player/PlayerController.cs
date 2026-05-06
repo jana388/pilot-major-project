@@ -2,9 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Cinemachine;
 using UnityEngine;
-using UnityEngine.Audio;
 using UnityEngine.InputSystem;
-using UnityEngine.Rendering.Universal.Internal;
 
 public class PlayerController : MonoTimeBehaviour
 {
@@ -114,6 +112,7 @@ public class PlayerController : MonoTimeBehaviour
 
     [SerializeField] private float cameraSwitchDelay = 0.3f;
     private float cameraSwitchCooldown = 0f;
+    [SerializeField] Animator animator;
 
 
     #endregion
@@ -245,6 +244,13 @@ public class PlayerController : MonoTimeBehaviour
             // Combine horizontal and vertical movement
             Vector3 finalMove = (move * playerSpeed) + (playerVelocity.y * Vector3.up);
             characterController.Move(finalMove * Time.deltaTime);
+        
+       
+            float speed = Mathf.Abs(characterController.velocity.z) + Mathf.Abs(characterController.velocity.x);
+            animator.SetFloat("Speed", speed);
+        
+
+        Debug.Log("velocity: " + characterController.velocity);
         
     }
 
