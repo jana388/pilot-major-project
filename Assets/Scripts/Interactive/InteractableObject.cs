@@ -19,27 +19,17 @@ public class InteractableObject : MonoBehaviour, IInteractive
      public string GamepadPrompt => gamepadPrompt;
     [SerializeField] private GameContext context;
 
-    //[SerializeField] private Material outlineMaterial;
     private Outline outline;
     private void Start()
     {
         outline = gameObject.GetOrAddComponent<Outline>();
         outline.enabled = false;
         outline.OutlineWidth = Settings.instance.outlineWidth;
-        // Setup separate outline material
-        //outlineMaterial = new Material(outlineMaterial);
-
-        // Assign the new outline material to this mesh renderer
-        //if (!TryGetComponent<MeshRenderer>(out var meshRenderer)) meshRenderer = GetComponentInChildren<MeshRenderer>();
-        //var mats = meshRenderer.materials.ToList();
-        //mats.Add(outlineMaterial);
-        //meshRenderer.SetMaterials(mats);
     }
 
     public virtual void Interacted()
     {
-        _interactEvent?.Invoke();
-        gameObject.SetActive(false);
+        _interactEvent.Invoke();
         print("Just interacted");
     }
 
@@ -77,6 +67,7 @@ public class InteractableObject : MonoBehaviour, IInteractive
         if (count > 0)
         {
             return ItemRequirement.ItemRequired;
+            //add ui saying item required
         }
         
         return ItemRequirement.NoItem;

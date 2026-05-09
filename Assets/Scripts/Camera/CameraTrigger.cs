@@ -2,6 +2,7 @@ using UnityEngine;
 using Unity.Cinemachine;
 using Unity.VisualScripting;    
 using UnityEngine.Rendering;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(BoxCollider))]
 [ExecuteAlways]
@@ -10,7 +11,8 @@ public class CameraTrigger : MonoBehaviour
 {
    [SerializeField] public CinemachineCamera cam;
    [SerializeField] private Vector3 boxSize;
-    [SerializeField] private GameContext context;
+   [SerializeField] private GameContext context;
+    [SerializeField] private UnityEvent evenTrigger;
 
     private BoxCollider box;
 
@@ -47,6 +49,7 @@ public class CameraTrigger : MonoBehaviour
             }
 
             CameraSwitcher.SwitchCamera(cam);
+        evenTrigger?.Invoke();
     } 
 
     private void OnDrawGizmos()

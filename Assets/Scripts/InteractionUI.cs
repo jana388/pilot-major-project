@@ -63,6 +63,8 @@ public class InteractionUI : MonoBehaviour
             promptText.text = gamepadPrompt;
         else
             promptText.text = keyboardPrompt;
+
+        Debug.Log($"Set {promptText.name} to {promptText.text}");
     }
 
     public void HidePrompt()

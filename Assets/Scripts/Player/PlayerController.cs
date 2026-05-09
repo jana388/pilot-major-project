@@ -151,10 +151,10 @@ public class PlayerController : MonoTimeBehaviour
             CameraSwitcher.OnCameraSwitched += OnCameraChanged;
     }
 
-            private void OnDestroy()
-            {
-                CameraSwitcher.OnCameraSwitched -= OnCameraChanged;
-            }
+    private void OnDestroy()
+    {
+        CameraSwitcher.OnCameraSwitched -= OnCameraChanged;
+    }
 
     private void OnControlsChanged(PlayerInput input)
     {
@@ -245,12 +245,9 @@ public class PlayerController : MonoTimeBehaviour
             Vector3 finalMove = (move * playerSpeed) + (playerVelocity.y * Vector3.up);
             characterController.Move(finalMove * Time.deltaTime);
         
-       
+       //newly added this is for the  walk animation 
             float speed = Mathf.Abs(characterController.velocity.z) + Mathf.Abs(characterController.velocity.x);
             animator.SetFloat("Speed", speed);
-        
-
-        Debug.Log("velocity: " + characterController.velocity);
         
     }
 
@@ -264,24 +261,11 @@ public class PlayerController : MonoTimeBehaviour
     {
         cameraSwitchCooldown = cameraSwitchDelay;
 
-        //triggering camera static effect
-        StartCoroutine(PlayCameraTransitionEffect());
+       
 
     }
 
-    private IEnumerator PlayCameraTransitionEffect()
-    {
-        //Enable CCTV overlay
-        //cctvOverlay.SetActive(true);
-
-        //play a static sound
-        //audioSource.PlayOneShot(staticNoise);
-
-        yield return new WaitForSeconds(0.15f);
-
-        //fade out or disable
-        //cctvOverlay.SetActive(false);
-    }
+  
 
     private InteractableObject _lastSelectedInteractable;
     void HandleInteractionPrompt()
@@ -334,6 +318,9 @@ public class PlayerController : MonoTimeBehaviour
     { 
         if (_canInteract && interactAction.action.WasCompletedThisFrame())
         {
+            //add the animation here?
+
+            animator.SetTrigger("InteractionPress");
             Debug.Log("Interact called, currentInteractable = " + currentInteractable);
 
             InteractableObject detectedObject = currentInteractable;

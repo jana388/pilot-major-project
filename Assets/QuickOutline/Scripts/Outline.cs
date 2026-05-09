@@ -100,6 +100,7 @@ public class Outline : MonoBehaviour {
   }
 
   void OnEnable() {
+        Debug.Log($"{name} outline enabled");
     foreach (var renderer in renderers) {
 
       // Append outline shaders
@@ -220,6 +221,10 @@ public class Outline : MonoBehaviour {
 
   List<Vector3> SmoothNormals(Mesh mesh) {
 
+        if (!mesh.isReadable)
+        {
+            Debug.LogWarning($"set read/write on mesh {mesh}", gameObject);
+        }
     // Group vertices by location
     var groups = mesh.vertices.Select((vertex, index) => new KeyValuePair<Vector3, int>(vertex, index)).GroupBy(pair => pair.Key);
 
