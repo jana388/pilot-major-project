@@ -49,24 +49,13 @@ public class LockPuzzle : MonoBehaviour, IPuzzleInputReceiver
     public void Deactivate()
     {
         active = false;
-
-        // Restore interactable object and hide puzzle UI
         interactableObject.SetActive(true);
         puzzleObject.SetActive(false);
 
         context.playerController.ActivateInputState(PlayerController.InputState.Player);
-
-
-        // Tell PuzzleManager we ended the puzzle
         context.puzzleManager.EndPuzzle();
-
-        // Switch camera back
         lockCam.Priority = 1;
-
-        //hide back button
         context.interactionUI.HideBackButton();
-
-        //also hide puzzle solved 
         context.interactionUI.HidePuzzleSolved();
     }
 

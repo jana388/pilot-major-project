@@ -7,6 +7,8 @@ public class PuzzleManager : MonoBehaviour
     [SerializeField] private GameContext context;
     [SerializeField] private InteractionUI interactionUI;
 
+    [SerializeField] private float puzzleSolvedDelay = 1.2f;
+
     public void StartPuzzle(IPuzzleInputReceiver puzzle)
     {
         Debug.Log("[PuzzleManager] StartPuzzle called with: " + puzzle);
@@ -87,17 +89,14 @@ public class PuzzleManager : MonoBehaviour
 
     public void ShowPuzzleSolved()
     {
+        
         StartCoroutine(PuzzleSolvedRoutine());
     }
 
     private IEnumerator PuzzleSolvedRoutine()
     {
-        yield return new WaitForSeconds(0.4f);
-
         interactionUI.ShowPuzzleSolved();
-
-        // Keep the panel visible briefly
-        yield return new WaitForSeconds(1.2f);
+        yield return new WaitForSeconds(puzzleSolvedDelay);
 
         interactionUI.HidePuzzleSolved();
 

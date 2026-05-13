@@ -29,6 +29,7 @@ public class InteractableObject : MonoBehaviour, IInteractive
 
     public virtual void Interacted()
     {
+        SoundManager.Instance.PlaySound2D("click_2");
         _interactEvent.Invoke();
         print("Just interacted");
     }

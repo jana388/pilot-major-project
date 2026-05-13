@@ -1,6 +1,7 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using UnityEngine.Audio;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 public class MainMenuManager : MonoBehaviour
 {
@@ -46,6 +47,7 @@ public class MainMenuManager : MonoBehaviour
     }
     public void MainMenuButtonClicked(MainMenuButtonTypes buttonClicked)
     {
+        
         DebugMessage("Button Clicked: " + buttonClicked.ToString());
         switch (buttonClicked)
         {
@@ -65,6 +67,7 @@ public class MainMenuManager : MonoBehaviour
                 Debug.Log("Button click that wasn't implemented in MainMenuManager Method");
                 break;
 
+                
         }
     }
     public void SocialButtonClicked(SocialButtonTypes buttonClicked)

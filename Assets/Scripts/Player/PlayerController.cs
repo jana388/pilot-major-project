@@ -51,7 +51,7 @@ public class PlayerController : MonoTimeBehaviour
         dialogue.Disable();
 
 
-        // Hide interaction prompt whenever we leave Player mode
+        // hide interaction prompt when leaving player mode
         if (state != InputState.Player)
             interactionUI.HidePrompt();
 
@@ -221,7 +221,6 @@ public class PlayerController : MonoTimeBehaviour
 
         //Camera Switch input delayyy
 
-        // If camera just switched, ignore movement change until the cooldown expires
         if (cameraSwitchCooldown > 0f)
         {
             cameraSwitchCooldown -= Time.deltaTime;
@@ -233,7 +232,7 @@ public class PlayerController : MonoTimeBehaviour
 
         }
 
-        // Normal Movement - should be running when the cooldown is finished
+        // Normal Movement 
             if (move != Vector3.zero)
             {
                 transform.forward = move;
@@ -318,7 +317,6 @@ public class PlayerController : MonoTimeBehaviour
     { 
         if (_canInteract && interactAction.action.WasCompletedThisFrame())
         {
-            //add the animation here?
 
             animator.SetTrigger("InteractionPress");
             Debug.Log("Interact called, currentInteractable = " + currentInteractable);
