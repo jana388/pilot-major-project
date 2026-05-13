@@ -20,8 +20,8 @@ public class LetterPuzzle : MonoBehaviour, IPuzzleInputReceiver
           bool solved = SolvePuzzle();
           if (solved)
           {
-            puzzleManager.ShowPuzzleSolved(); // handles timing + EndPuzzle()
-            End();  // hides the puzzle UI
+            puzzleManager.ShowPuzzleSolved(); 
+            End();
           }
         }
 

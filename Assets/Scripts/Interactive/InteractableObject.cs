@@ -68,7 +68,6 @@ public class InteractableObject : MonoBehaviour, IInteractive
         if (count > 0)
         {
             return ItemRequirement.ItemRequired;
-            //add ui saying item required
         }
         
         return ItemRequirement.NoItem;
@@ -77,7 +76,6 @@ public class InteractableObject : MonoBehaviour, IInteractive
     //private const string outlineStringID = "_EnableOutline";
     public void SetOutline(bool state)
     {
-        //outlineMaterial.SetInt(outlineStringID, state? 1 : 0); // Set outline shader state
         outline.enabled = state;
     }
 }
